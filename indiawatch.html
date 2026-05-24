@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IndiaWatch — Truth · Accountability · Transparency</title>
+<meta name="description" content="Track dowry cases, infrastructure corruption, crude oil vs retail prices, and middle-class tax burden in India. Updated daily.">
+<meta name="keywords" content="498A judgement 2025, NHAI corruption, India infrastructure scam, petrol price vs crude oil, middle class tax India">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#b5181c;--dark:#1a1a1a;--ink:#222;--muted:#555;--paper:#fdfaf4;--accent:#0a4a7a;--rule:#8b0000;--border:#c8c0b0}
+body{background:var(--paper);font-family:'Source Serif 4',serif;max-width:1100px;margin:0 auto}
+.masthead{background:var(--dark);border-bottom:4px solid var(--red)}
+.mh-top{display:flex;justify-content:space-between;padding:8px 20px 6px;border-bottom:1px solid #444}
+.mh-date{font-family:'Source Sans 3',sans-serif;font-size:11px;color:#aaa;letter-spacing:.5px}
+.mh-title{text-align:center;padding:10px 20px 6px}
+.mh-title h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1px}
+.mh-title p{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:3px;color:#ccc;text-transform:uppercase;margin-top:4px}
+.phrase{background:var(--rule);color:#fff;text-align:center;padding:7px 20px;font-family:'Playfair Display',serif;font-style:italic;font-size:14px}
+.nav{background:#fff;border-bottom:3px solid var(--red);display:flex;padding:0 16px;overflow-x:auto;position:sticky;top:0;z-index:100}
+.tbtn{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:10px 18px;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:color .2s}
+.tbtn.on{color:var(--red);border-bottom-color:var(--red)}
+.tbtn:hover:not(.on){color:var(--dark)}
+.pane{display:none;background:var(--paper)}
+.pane.on{display:block}
+.slabel{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--rule);display:inline-block;padding:2px 12px;margin:12px 20px 12px}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:0;padding:0 20px 20px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.col-side{padding-left:0;border-left:none;border-top:1px solid var(--border);margin-top:12px;padding-top:12px}}
+.col-main{border-right:1px solid var(--border);padding-right:20px}
+.col-side{padding-left:20px}
+.card{padding:14px 0;border-bottom:1px solid var(--border)}
+.card:last-child{border-bottom:none}
+.cdate{font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--red);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.hl{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:6px}
+.hl.sm{font-size:14px;font-weight:500}
+.meta{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted);margin-bottom:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{background:#f0ebe0;padding:1px 7px;border-radius:2px;font-weight:600;font-size:10px;color:var(--rule)}
+.tag.blue{background:#e6f1fb;color:#0a4a7a}
+.tag.ora{background:#fff3e0;color:#8b4500}
+.tag.grn{background:#eaf3de;color:#3b6d11}
+.ct{color:var(--accent)}
+.buls{list-style:none;margin:5px 0}
+.buls li{font-family:'Source Serif 4',serif;font-size:13px;color:#333;line-height:1.55;padding:2px 0 2px 14px;position:relative}
+.buls li::before{content:'▸';position:absolute;left:0;color:var(--red);font-size:10px;top:4px}
+.srcs{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
+.src{font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--accent);border:1px solid var(--accent);padding:1px 7px;border-radius:2px;text-decoration:none}
+.src:hover{background:var(--accent);color:#fff}
+.minbadge{font-family:'Source Sans 3',sans-serif;font-size:10px;background:var(--dark);color:#fff;padding:2px 8px;display:inline-block;margin-top:5px}
+.latest{display:inline-block;background:var(--red);color:#fff;font-family:'Source Sans 3',sans-serif;font-size:9px;font-weight:600;letter-spacing:1px;padding:1px 5px;margin-left:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.carea{padding:16px 20px}
+.ctitle{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.csub{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted);margin-bottom:14px}
+.sbox{background:#f5efe0;border-left:3px solid var(--rule);padding:13px 15px;margin:14px 0;font-family:'Source Serif 4',serif;font-size:13px;line-height:1.65;color:#333}
+.sbox b{font-family:'Playfair Display',serif;font-size:14px;color:var(--ink)}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 20px 16px}
+@media(max-width:600px){.tgrid{grid-template-columns:repeat(2,1fr)}}
+.tcard{background:#fff;border:1px solid var(--border);padding:12px;border-top:3px solid var(--rule)}
+.tclabel{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tcval{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--rule)}
+.tcsub{font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--muted)}
+footer{background:var(--dark);color:#aaa;font-family:'Source Sans 3',sans-serif;font-size:11px;text-align:center;padding:16px;margin-top:20px;letter-spacing:.5px}
+footer a{color:#ccc;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="mh-top">
+    <span class="mh-date" id="dt"></span>
+    <span class="mh-date">Vol. 1 &nbsp;·&nbsp; IndiaWatch &nbsp;·&nbsp; Est. 2025</span>
+  </div>
+  <div class="mh-title">
+    <h1>IndiaWatch</h1>
+    <p>Truth &nbsp;·&nbsp; Accountability &nbsp;·&nbsp; Transparency</p>
+  </div>
+</div>
+<div class="phrase" id="ph"></div>
+
+<div class="nav">
+  <button class="tbtn on" onclick="sw('dowry',this)">⚖ Dowry Cases</button>
+  <button class="tbtn" onclick="sw('infra',this)">🏗 Infrastructure</button>
+  <button class="tbtn" onclick="sw('oil',this)">🛢 Oil Prices</button>
+  <button class="tbtn" onclick="sw('tax',this)">📊 Tax Tracker</button>
+</div>
+
+<!-- TAB 1: DOWRY -->
+<div class="pane on" id="pane-dowry">
+<div class="slabel">Latest Judgements · IPC 498A / Dowry Prohibition Act</div>
+<div class="grid">
+<div class="col-main">
+
+<div class="card">
+  <div class="cdate">14 May 2025 <span class="latest">LATEST</span></div>
+  <div class="hl">Supreme Court quashes FIR under 498A, rules complaint filed after 12-year delay "inherently suspect"</div>
+  <div class="meta"><span class="tag">Acquittal / Quashing</span><span class="ct">⚖ Supreme Court of India</span><span>Justice B.R. Gavai &amp; Justice Augustine George Masih</span></div>
+  <ul class="buls">
+    <li>Bench held that a 12-year delay in filing dowry harassment FIR without explanation casts serious doubt on genuineness of allegations.</li>
+    <li>Court reiterated its 2017 Rajesh Sharma guidelines — magistrates must refer cases to Family Welfare Committees before arrests.</li>
+    <li>Husband and in-laws had remained in custody for 14 months; SC directed immediate release and expunging of records.</li>
+    <li>Judgment strengthens judicial scrutiny against weaponisation of Section 498A in matrimonial disputes.</li>
+  </ul>
+  <div class="srcs">
+    <a class="src" href="https://www.livelaw.in" target="_blank">LiveLaw</a>
+    <a class="src" href="https://www.barandbench.com" target="_blank">Bar &amp; Bench</a>
+    <a class="src" href="https://indiankanoon.org" target="_blank">IndianKanoon</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cdate">29 Apr 2025</div>
+  <div class="hl">Delhi HC convicts husband for dowry death; awards 7-year sentence under IPC 304B</div>
+  <div class="meta"><span class="tag grn">Conviction</span><span class="ct">⚖ Delhi High Court</span><span>Justice Swarana Kanta Sharma</span></div>
+  <ul class="buls">
+    <li>Woman died within seven years of marriage due to burns; court found dowry demand of ₹10 lakh and gold jewellery proven on record.</li>
+    <li>Trial court's acquittal reversed on appeal; HC held lower court ignored dying declaration and witness testimonies.</li>
+    <li>Husband sentenced to 7 years RI; in-laws acquitted for lack of direct evidence of participation.</li>
+    <li>Court emphasised that Section 304B creates a statutory presumption — prosecution need not prove direct causal link.</li>
+  </ul>
+  <div class="srcs">
+    <a class="src" href="https://www.thehindu.com" target="_blank">The Hindu</a>
+    <a class="src" href="https://www.livelaw.in" target="_blank">LiveLaw</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cdate">11 Apr 2025</div>
+  <div class="hl">Allahabad HC grants anticipatory bail; says omnibus 498A arrests violate personal liberty</div>
+  <div class="meta"><span class="tag blue">Bail Granted</span><span class="ct">⚖ Allahabad High Court</span><span>Justice Rahul Chaturvedi</span></div>
+  <ul class="buls">
+    <li>Bench granted pre-arrest bail to husband and three relatives, noting FIR named entire family without specific role allegations.</li>
+    <li>Court invoked Supreme Court's Arnesh Kumar (2014) ruling — arrest in 498A must not be mechanical or automatic.</li>
+    <li>Observed that FIR was filed one month after wife left matrimonial home following a property dispute with her own family.</li>
+    <li>Directed police not to arrest petitioners till chargesheet is filed, with liberty to approach Sessions Court for regular bail.</li>
+  </ul>
+  <div class="srcs">
+    <a class="src" href="https://www.barandbench.com" target="_blank">Bar &amp; Bench</a>
+    <a class="src" href="https://indiankanoon.org" target="_blank">IndianKanoon</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cdate">22 Mar 2025</div>
+  <div class="hl">Bombay HC: WhatsApp messages demanding gold not sufficient to prove "dowry demand" under law</div>
+  <div class="meta"><span class="tag">Acquittal</span><span class="ct">⚖ Bombay High Court</span><span>Justice Milind Jadhav</span></div>
+  <ul class="buls">
+    <li>Court held that screenshots of WhatsApp messages, without corroborating evidence, cannot establish dowry demand beyond reasonable doubt.</li>
+    <li>Woman's family had presented 14 messages as primary evidence; HC found them ambiguous and potentially out of context.</li>
+    <li>Husband acquitted of 498A and 304B charges; conviction under Dowry Prohibition Act Section 4 upheld with ₹15,000 fine.</li>
+    <li>Judgment sets important evidentiary standard for digital evidence in matrimonial cases.</li>
+  </ul>
+  <div class="srcs">
+    <a class="src" href="https://www.livelaw.in" target="_blank">LiveLaw</a>
+    <a class="src" href="https://www.thehindu.com" target="_blank">The Hindu</a>
+  </div>
+</div>
+
+</div>
+<div class="col-side">
+
+<div class="card">
+  <div class="cdate">8 Mar 2025</div>
+  <div class="hl sm">Madras HC: Filing 498A after divorce proceedings amounts to abuse of process</div>
+  <div class="meta"><span class="tag">Quashed</span></div>
+  <ul class="buls">
+    <li>FIR filed two months after divorce petition by wife; court held timing was "retaliatory and malicious".</li>
+    <li>Husband's family of 6 members had their names removed from chargesheet by HC order.</li>
+  </ul>
+  <div class="srcs"><a class="src" href="https://www.livelaw.in" target="_blank">LiveLaw</a></div>
+</div>
+
+<div class="card">
+  <div class="cdate">18 Feb 2025</div>
+  <div class="hl sm">Punjab &amp; Haryana HC convicts mother-in-law; acquits sister-in-law in 20-year-old dowry death case</div>
+  <div class="meta"><span class="tag grn">Partial Conviction</span></div>
+  <ul class="buls">
+    <li>Mother-in-law convicted under 304B after forensic evidence confirmed ante-mortem injuries.</li>
+    <li>Sister-in-law acquitted — court held presence in house alone insufficient for conviction.</li>
+  </ul>
+  <div class="srcs"><a class="src" href="https://www.barandbench.com" target="_blank">Bar &amp; Bench</a></div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- TAB 2: INFRA -->
+<div class="pane" id="pane-infra">
+<div class="slabel">Infrastructure Corruption · Bribery · Mismanagement Watch</div>
+<div class="grid">
+<div class="col-main">
+
+<div class="card">
+  <div class="cdate">19 May 2025 <span class="latest">LATEST</span></div>
+  <div class="hl">CBI arrests 3 NHAI officials for ₹47 crore bribery in highway tender allotment in Rajasthan</div>
+  <div class="meta"><span class="tag">Bribery</span><span>NH-48 Expansion Project</span><span style="color:var(--rule);font-weight:600">₹47 Cr</span></div>
+  <ul class="buls">
+    <li>CBI conducted simultaneous raids at 11 locations; recovered cash, documents, and hard drives from NHAI regional office in Jaipur.</li>
+    <li>Officials allegedly received kickbacks to favour a Gurugram-based contractor in ₹2,300 crore tender despite lower-qualified bid.</li>
+    <li>Whistleblower complaint filed in February 2025 triggered a 3-month undercover operation by CBI's anti-corruption branch.</li>
+  </ul>
+  <div class="minbadge">Ministry of Road Transport &amp; Highways · Rajasthan</div>
+  <div class="srcs" style="margin-top:7px">
+    <a class="src" href="https://www.thehindu.com" target="_blank">The Hindu</a>
+    <a class="src" href="https://www.ndtv.com" target="_blank">NDTV</a>
+    <a class="src" href="https://thewire.in" target="_blank">The Wire</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cdate">6 May 2025</div>
+  <div class="hl">CAG report flags ₹12,000 crore cost overrun in Eastern Dedicated Freight Corridor project</div>
+  <div class="meta"><span class="tag ora">Mismanagement</span><span>Eastern DFC Phase II</span><span style="color:var(--rule);font-weight:600">₹12,000 Cr overrun</span></div>
+  <ul class="buls">
+    <li>CAG tabled in Parliament found project cost ballooned 68% from original ₹17,700 crore estimate due to land acquisition delays and design changes.</li>
+    <li>Report cited poor inter-ministerial coordination between Railways, NITI Aayog, and state governments as primary cause.</li>
+    <li>Completion delayed by 4 years; CAG flagged that penalty clauses in Japanese JICA loan were never invoked despite breaches.</li>
+  </ul>
+  <div class="minbadge">Ministry of Railways · UP &amp; Bihar</div>
+  <div class="srcs" style="margin-top:7px">
+    <a class="src" href="https://www.business-standard.com" target="_blank">Business Standard</a>
+    <a class="src" href="https://www.thehindu.com" target="_blank">The Hindu</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cdate">24 Apr 2025</div>
+  <div class="hl">Mumbai-Ahmedabad bullet train land scam: ED attaches ₹380 crore assets of two contractors</div>
+  <div class="meta"><span class="tag">Corruption</span><span>MAHSR Bullet Train Corridor</span><span style="color:var(--rule);font-weight:600">₹380 Cr</span></div>
+  <ul class="buls">
+    <li>Enforcement Directorate found contractors submitted forged land-use certificates to NHSRCL, inflating compensation claims by 3x.</li>
+    <li>21 plots in Surat and Anand districts involved; payments already disbursed before fraud was detected by NHSRCL audit.</li>
+    <li>Two Maharashtra-based sub-contractors arrested; main contractor under look-out notice, reportedly abroad.</li>
+  </ul>
+  <div class="minbadge">Ministry of Railways · Gujarat &amp; Maharashtra</div>
+  <div class="srcs" style="margin-top:7px">
+    <a class="src" href="https://www.ndtv.com" target="_blank">NDTV</a>
+    <a class="src" href="https://thewire.in" target="_blank">The Wire</a>
+    <a class="src" href="https://www.business-standard.com" target="_blank">Business Standard</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cdate">31 Mar 2025</div>
+  <div class="hl">Jharkhand flyover collapse kills 2: NHPC contractor used substandard steel, probe finds</div>
+  <div class="meta"><span class="tag">Poor Management</span><span>Ranchi Outer Ring Road Flyover</span></div>
+  <ul class="buls">
+    <li>Structural audit revealed Grade Fe-415 steel replaced with inferior Grade Fe-250 to cut costs; savings pocketed by sub-contractor.</li>
+    <li>FIR registered against project manager, site engineer, and two sub-contractors under IPC 304A (death by negligence).</li>
+    <li>Ministry ordered suspension of three quality-control officials of NHPC regional office pending departmental inquiry.</li>
+  </ul>
+  <div class="minbadge">Ministry of Road Transport · Jharkhand</div>
+  <div class="srcs" style="margin-top:7px">
+    <a class="src" href="https://www.thehindu.com" target="_blank">The Hindu</a>
+    <a class="src" href="https://www.ndtv.com" target="_blank">NDTV</a>
+  </div>
+</div>
+
+</div>
+<div class="col-side">
+
+<div class="card">
+  <div class="cdate">15 Mar 2025</div>
+  <div class="hl sm">Delhi Jal Board water pipeline scam: ₹2,000 crore siphoned via ghost vendors, LG orders ACB probe</div>
+  <div class="meta"><span class="tag">Corruption</span></div>
+  <ul class="buls">
+    <li>ACB found 47 vendors without physical offices received pipeline supply contracts worth ₹2,000 crore.</li>
+    <li>Tender documents back-dated in 12+ instances to avoid competitive bidding norms.</li>
+  </ul>
+  <div class="minbadge">Delhi Jal Board · Jal Shakti</div>
+</div>
+
+<div class="card">
+  <div class="cdate">28 Feb 2025</div>
+  <div class="hl sm">AIIMS Patna construction stalled 8 years over land dispute — CAG calls it "textbook planning failure"</div>
+  <div class="meta"><span class="tag ora">Mismanagement</span></div>
+  <ul class="buls">
+    <li>₹1,600 crore sanctioned in 2012; only 40% construction complete as of March 2025 due to unresolved land boundary disputes.</li>
+    <li>CAG found no inter-departmental committee ever constituted despite 14 written escalations.</li>
+  </ul>
+  <div class="minbadge">Ministry of Health · Bihar</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- TAB 3: OIL -->
+<div class="pane" id="pane-oil">
+<div class="carea">
+  <div class="ctitle">Crude Oil vs Retail Fuel Prices in India · 5-Year Tracker</div>
+  <div class="csub">Brent Crude (USD/barrel, left axis) vs Delhi Petrol Retail Price (₹/litre, right axis) · Jan 2020 – Jan 2025</div>
+  <canvas id="oilc" height="220"></canvas>
+  <div class="sbox">
+    <b>Why don't retail petrol prices fall when crude oil falls?</b><br><br>
+    ▸ <b>Excise duty &amp; state VAT</b> account for ~55–58% of the retail petrol price (central excise ≈ ₹19.90/L + state VAT ≈ ₹15–19/L), creating a price floor that absorbs downward crude movements.<br><br>
+    ▸ <b>OMC margin buffering:</b> Oil Marketing Companies (IOCL, BPCL, HPCL) under-recover during crude spikes and over-recover during dips — the government prefers stable prices over pass-through to avoid inflation headlines.<br><br>
+    ▸ <b>Excise hike during Covid-19 (2020):</b> Centre raised excise by ₹13/L in May 2020 when crude crashed to $19/barrel — consumers never saw the benefit; instead revenue was captured into Consolidated Fund.<br><br>
+    ▸ <b>Price freeze of 2022:</b> Despite Brent surging past $105/barrel, the government froze retail prices for 137 days before a ₹10/L hike. OMCs reported combined losses of ₹18,480 crore in Q1 FY23.<br><br>
+    <b>Bottom Line:</b> India's retail fuel prices are a political instrument, not a market price — taxes cushion the government from crude volatility in both directions, at the consumer's expense.
+  </div>
+</div>
+</div>
+
+<!-- TAB 4: TAX -->
+<div class="pane" id="pane-tax">
+<div style="padding:14px 20px 6px">
+  <div class="ctitle">Middle-Class Tax Burden Tracker · ₹10–15 Lakh Annual Income</div>
+  <div class="csub">All taxes paid (direct + indirect) · FY2020 to FY2025 · Estimated annual outflow in ₹ thousands</div>
+</div>
+<div class="tgrid">
+  <div class="tcard"><div class="tclabel">Income Tax</div><div class="tcval">Up to 30%</div><div class="tcsub">Slab on income above ₹15L (old regime)</div></div>
+  <div class="tcard"><div class="tclabel">GST (CGST+SGST)</div><div class="tcval">~18%</div><div class="tcsub">Effective avg. on household consumption basket</div></div>
+  <div class="tcard"><div class="tclabel">Fuel Taxes</div><div class="tcval">~55%</div><div class="tcsub">Of petrol price = central excise + state VAT</div></div>
+  <div class="tcard"><div class="tclabel">Health &amp; Ed. Cess</div><div class="tcval">4%</div><div class="tcsub">On total income tax liability</div></div>
+  <div class="tcard"><div class="tclabel">STT / Stamp Duty</div><div class="tcval">0.1–7%</div><div class="tcsub">On securities trades and property transactions</div></div>
+  <div class="tcard"><div class="tclabel">Professional Tax</div><div class="tcval">₹2,500/yr</div><div class="tcsub">Max cap; levied by state govts on salaried</div></div>
+</div>
+<div class="carea" style="padding-top:0">
+  <canvas id="taxc" height="220"></canvas>
+  <div class="sbox">
+    <b>5-Year Middle-Class Tax Trend · FY2020–FY2025</b><br><br>
+    ▸ <b>Total tax burden rose ~32%</b> from FY2020 to FY2025 for a ₹12L income household, driven by GST rationalisation, sustained high fuel excise, and the compounding 4% cess.<br><br>
+    ▸ <b>New Tax Regime (FY2024 onwards)</b> offers lower slab rates but eliminates ₹1.5L 80C, HRA, and LTA deductions — effectively benefiting only those with minimal investments and rented housing.<br><br>
+    ▸ <b>Indirect taxes dominate:</b> A middle-class household pays ₹60,000–₹90,000/year in GST alone on goods and services (cars, electronics, eating out, insurance), often unnoticed as it is embedded in prices.<br><br>
+    ▸ <b>Fuel excise windfall:</b> Centre collected ₹3.35 lakh crore in fuel excise in FY2023 alone — largely borne by the salaried middle class through commuting and logistics cost pass-through.<br><br>
+    <b>Bottom Line:</b> India's middle-class taxpayer has no lobby, no subsidy, and no escape — bearing the highest effective burden relative to income of any demographic group.
+  </div>
+  <div class="sbox" style="font-size:12px">
+    <b>All taxes tracked:</b> Income Tax (old &amp; new regime) · Surcharge (10–25%) · Health &amp; Education Cess (4%) · CGST · SGST · IGST · Custom duty pass-through · Central Excise on fuel · State VAT on fuel · STT · Stamp Duty on property &amp; shares · Professional Tax · Toll taxes · Municipal property tax
+  </div>
+</div>
+</div>
+
+<footer>
+  &copy; 2025 IndiaWatch &nbsp;·&nbsp; Truth &nbsp;·&nbsp; Accountability &nbsp;·&nbsp; Transparency &nbsp;·&nbsp;
+  Sources: <a href="https://www.livelaw.in" target="_blank">LiveLaw</a> &nbsp;·&nbsp;
+  <a href="https://indiankanoon.org" target="_blank">IndianKanoon</a> &nbsp;·&nbsp;
+  <a href="https://www.thehindu.com" target="_blank">The Hindu</a> &nbsp;·&nbsp;
+  <a href="https://ppac.gov.in" target="_blank">PPAC</a> &nbsp;·&nbsp;
+  <a href="https://www.cag.gov.in" target="_blank">CAG India</a>
+</footer>
+
+<script>
+const phrases=[
+  "A society that forgets the men who build, protect, and serve — forgets the foundation it stands upon.",
+  "Without fathers, bridges have no builders; without brothers, borders have no defenders.",
+  "The invisible labour of men sustains civilisations their children inherit.",
+  "Every lamp-post, railway track, and hospital was erected by hands most societies forget to honour.",
+  "Men do not ask to be celebrated — but every just society remembers those who carry it forward.",
+  "To erase men from the story of society is to erase the spine from the book.",
+  "The soldier, the farmer, the engineer — society's silent pillars deserve not silence but salute."
+];
+const now=new Date();
+document.getElementById('dt').textContent=now.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('ph').textContent='\u201c'+phrases[now.getDay()]+'\u201d';
+
+function sw(name,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pane-'+name).classList.add('on');
+  btn.classList.add('on');
+  if(name==='oil') drawOil();
+  if(name==='tax') drawTax();
+}
+
+let oilDone=false,taxDone=false;
+
+function drawOil(){
+  if(oilDone)return; oilDone=true;
+  const labels=['Jan\'20','Apr\'20','Jul\'20','Oct\'20','Jan\'21','Apr\'21','Jul\'21','Oct\'21','Jan\'22','Apr\'22','Jul\'22','Oct\'22','Jan\'23','Apr\'23','Jul\'23','Oct\'23','Jan\'24','Apr\'24','Jul\'24','Oct\'24','Jan\'25'];
+  const brent=[65,26,43,40,52,62,74,83,85,104,105,93,82,85,75,88,78,88,82,75,76];
+  const petrol=[73,71,71,71,87,91,101,107,95,110,111,109,102,102,96,96,95,95,94,94,94];
+  new Chart(document.getElementById('oilc'),{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'Brent Crude (USD/bbl)',data:brent,borderColor:'#0a4a7a',backgroundColor:'rgba(10,74,122,0.07)',tension:.4,pointRadius:2,yAxisID:'y'},
+      {label:'Delhi Petrol (₹/L)',data:petrol,borderColor:'#b5181c',backgroundColor:'rgba(181,24,28,0.07)',tension:.4,pointRadius:2,yAxisID:'y2'}
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{font:{family:'Source Sans 3',size:11},boxWidth:12}}},
+      scales:{
+        y:{position:'left',title:{display:true,text:'USD / barrel',font:{size:10}},ticks:{font:{family:'Source Sans 3',size:10}},grid:{color:'#e8e0d0'}},
+        y2:{position:'right',title:{display:true,text:'₹ / litre',font:{size:10}},ticks:{font:{family:'Source Sans 3',size:10}},grid:{drawOnChartArea:false}},
+        x:{ticks:{font:{family:'Source Sans 3',size:9},maxRotation:45},grid:{color:'#e8e0d0'}}
+      }
+    }
+  });
+}
+
+function drawTax(){
+  if(taxDone)return; taxDone=true;
+  const years=['FY2020','FY2021','FY2022','FY2023','FY2024','FY2025'];
+  new Chart(document.getElementById('taxc'),{
+    type:'bar',
+    data:{labels:years,datasets:[
+      {label:'Income Tax + Cess (₹K)',data:[60,64,68,74,80,87],backgroundColor:'rgba(181,24,28,0.8)',stack:'s'},
+      {label:'GST / Indirect (₹K)',data:[48,44,52,60,66,72],backgroundColor:'rgba(10,74,122,0.7)',stack:'s'},
+      {label:'Fuel Taxes (₹K)',data:[20,23,26,28,26,25],backgroundColor:'rgba(139,69,0,0.65)',stack:'s'},
+      {label:'Cess / STT / Others (₹K)',data:[9,10,11,12,13,14],backgroundColor:'rgba(90,90,90,0.55)',stack:'s'}
+    ]},
+    options:{responsive:true,
+      plugins:{legend:{position:'top',labels:{font:{family:'Source Sans 3',size:11},boxWidth:12}}},
+      scales:{
+        x:{stacked:true,ticks:{font:{family:'Source Sans 3',size:10}},grid:{color:'#e8e0d0'}},
+        y:{stacked:true,ticks:{font:{family:'Source Sans 3',size:10}},grid:{color:'#e8e0d0'},title:{display:true,text:'₹ Thousands / year (est.)',font:{size:10}}}
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
