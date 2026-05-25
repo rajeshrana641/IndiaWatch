@@ -366,13 +366,12 @@ footer a{color:#ccc;text-decoration:none}
 <div style="padding:10px 20px;background:#fff;border-bottom:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
   <input id="tracker-search" type="text" placeholder="Search name, case, party..." oninput="filterTracker()" style="font-family:'Source Sans 3',sans-serif;font-size:12px;padding:6px 12px;border:1px solid var(--border);border-radius:2px;width:220px;background:var(--paper);">
   <select id="tracker-filter" onchange="filterTracker()" style="font-family:'Source Sans 3',sans-serif;font-size:11px;padding:6px 10px;border:1px solid var(--border);border-radius:2px;background:var(--paper);">
-    <option value="all">All Categories</option>
+    <option value="all">All</option>
     <option value="judge">Judges Only</option>
     <option value="politician">Politicians Only</option>
-    <option value="ongoing">Status: Ongoing</option>
-    <option value="convicted">Status: Convicted</option>
-    <option value="acquitted">Status: Acquitted</option>
-    <option value="family">Family Judicial Links</option>
+    <option value="ongoing">On Bail / Under Probe</option>
+    <option value="chargesheet">Chargesheet Filed</option>
+    <option value="convicted">Convicted</option>
   </select>
   <span id="tracker-count" style="font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--muted);"></span>
 </div>
@@ -381,13 +380,11 @@ footer a{color:#ccc;text-decoration:none}
 <table class="ctable" id="tracker-table" style="margin-top:12px;">
 <thead>
   <tr>
-    <th style="width:160px;">Name</th>
-    <th style="width:100px;">Role / Position</th>
-    <th style="width:180px;">Case / Allegation</th>
-    <th style="width:90px;">Agency</th>
-    <th style="width:90px;">Status</th>
-    <th style="width:130px;">Family / Judicial Links</th>
-    <th style="width:80px;">Source</th>
+    <th style="width:170px;">Name</th>
+    <th style="width:180px;">Current / Recent Post</th>
+    <th>Corruption Charge</th>
+    <th style="width:80px;">Agency</th>
+    <th style="width:130px;">Status</th>
   </tr>
 </thead>
 <tbody id="tracker-body">
@@ -414,299 +411,35 @@ footer a{color:#ccc;text-decoration:none}
 </style>
 
 <script>
+// ACCOUNTABILITY TRACKER — Only current/recent officeholders with active corruption charges
 const TRACKER_DATA = [
 
-  // ══════════ JUDGES ══════════
-  {
-    type:'judge', name:'Justice Yashwant Varma',
-    role:'Judge, Allahabad HC (fmr Delhi HC)',
-    case:'Unaccounted cash found at official residence during fire (Mar 2025); Bar Council demands impeachment; PIL filed for CBI probe',
-    agency:'In-House SC Committee',
-    status:'inquiry',statusLabel:'In-House Inquiry',
-    family:'Son reportedly in legal practice; no direct judicial family link confirmed',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  },
-  {
-    type:'judge', name:'Justice (Retd.) Ranjan Gogoi',
-    role:'Former CJI · Rajya Sabha MP',
-    case:'Accepted RS nomination 4 months post-retirement; sexual harassment allegation (2019) dismissed by in-house panel without independent probe',
-    agency:'In-House Panel (2019)',
-    status:'discharged',statusLabel:'Closed — No Action',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'The Wire', sourceUrl:'https://thewire.in'
-  },
-  {
-    type:'judge', name:'Justice (Retd.) P.C. Ghose',
-    role:'Former SC Judge · First Lokpal of India',
-    case:'Appointment as Lokpal within months of retirement raised conflict-of-interest concerns; no formal case',
-    agency:'None',
-    status:'discharged',statusLabel:'No Case Filed',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'judge', name:'Justice S.K. Gangele',
-    role:'Fmr Judge, MP HC',
-    case:'Sexual harassment allegation by fellow judge; in-house inquiry found allegations not established; SC accepted report',
-    agency:'SC In-House Committee',
-    status:'acquitted',statusLabel:'Exonerated',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'Bar & Bench', sourceUrl:'https://www.barandbench.com'
-  },
-  {
-    type:'judge', name:'Justice (Retd.) Nirmal Yadav',
-    role:'Fmr Judge, Punjab & Haryana HC',
-    case:'Cash-at-doorstep scam (2008); ₹15 lakh meant as bribe delivered to wrong address; CBI chargesheet filed; trial ongoing for 15+ years',
-    agency:'CBI',
-    status:'ongoing',statusLabel:'Trial Ongoing',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  },
-  {
-    type:'judge', name:'Justice (Retd.) I.M. Quddusi',
-    role:'Fmr Judge, Orissa HC',
-    case:'CBI arrested 2017 for allegedly agreeing to influence SC bench in medical college case; bail granted; trial ongoing',
-    agency:'CBI',
-    status:'ongoing',statusLabel:'Trial Ongoing',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'NDTV', sourceUrl:'https://www.ndtv.com'
-  },
+  // ══ SITTING / RECENTLY HOLDING OFFICE · ACTIVE CASES ══
 
-  // ══════════ POLITICIANS — CENTRAL ══════════
-  {
-    type:'politician', name:'Arvind Kejriwal',
-    role:'CM Delhi (fmr) · AAP National Convenor',
-    case:'Delhi Liquor Policy scam; ED arrested Mar 2024; SC granted bail Sep 2024; chargesheet filed; trial ongoing. Also CBI case pending.',
-    agency:'ED + CBI',
-    status:'bailed',statusLabel:'On Bail · Trial Ongoing',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'politician', name:'Manish Sisodia',
-    role:'Fmr Dy CM Delhi · AAP',
-    case:'Delhi Liquor Policy scam; arrested Feb 2023; bail denied multiple times; SC granted bail Aug 2024 after 17 months in custody',
-    agency:'ED + CBI',
-    status:'bailed',statusLabel:'On Bail · Trial Ongoing',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  },
-  {
-    type:'politician', name:'Hemant Soren',
-    role:'CM Jharkhand · JMM',
-    case:'Land scam; ED arrested Jan 2024; SC granted bail Jun 2024; returned as CM; trial ongoing',
-    agency:'ED',
-    status:'bailed',statusLabel:'On Bail · CM Again',
-    family:'Father Shibu Soren — fmr CM; brother Basant Soren MLA',
-    familyFlag:false,
-    source:'NDTV', sourceUrl:'https://www.ndtv.com'
-  },
-  {
-    type:'politician', name:'K. Chandrashekar Rao',
-    role:'Fmr CM Telangana · BRS Chief',
-    case:'Dharani portal land scam; ED investigation ongoing; phone tapping case; FIR by Telangana SIT',
-    agency:'ED + SIT',
-    status:'ongoing',statusLabel:'Under Investigation',
-    family:'Daughter K. Kavitha — fmr MLC; arrested in Delhi liquor scam, bail granted',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'politician', name:'K. Kavitha',
-    role:'Fmr MLC Telangana · BRS · KCR's daughter',
-    case:'Delhi Liquor Policy scam; ED arrested Mar 2024; CBI also arrested; SC granted bail Sep 2024',
-    agency:'ED + CBI',
-    status:'bailed',statusLabel:'On Bail · Trial Ongoing',
-    family:'Father K. Chandrashekar Rao — fmr CM (also under probe)',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  },
-  {
-    type:'politician', name:'Robert Vadra',
-    role:'Businessman · Son-in-law of Sonia Gandhi',
-    case:'Bikaner land scam ₹700 Cr; Haryana land deal; multiple ED chargesheets; protected by Delhi HC from arrest; trial ongoing',
-    agency:'ED',
-    status:'ongoing',statusLabel:'Trial Ongoing · Protected',
-    family:'Wife Priyanka Gandhi Vadra — Union Minister; mother-in-law Sonia Gandhi — MP',
-    familyFlag:true,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'politician', name:'Abhishek Banerjee',
-    role:'MP Diamond Harbour · TMC · Mamata's nephew',
-    case:'Coal levy scam; cattle smuggling; ED multiple summons; wife Rujira summoned for foreign remittances; chargesheet filed',
-    agency:'ED + CBI',
-    status:'chargesheet',statusLabel:'Chargesheet Filed',
-    family:'Aunt Mamata Banerjee — CM West Bengal',
-    familyFlag:false,
-    source:'NDTV', sourceUrl:'https://www.ndtv.com'
-  },
-  {
-    type:'politician', name:'Satyendar Jain',
-    role:'Fmr Minister Delhi · AAP',
-    case:'Money laundering via Hawala; ED arrested May 2022; bail denied; SC bail with conditions Oct 2023; trial ongoing',
-    agency:'ED',
-    status:'bailed',statusLabel:'On Bail · Trial Ongoing',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'Bar & Bench', sourceUrl:'https://www.barandbench.com'
-  },
-  {
-    type:'politician', name:'Lalu Prasad Yadav',
-    role:'Fmr CM Bihar · RJD Chief',
-    case:'Fodder scam — convicted in 4 cases; 5th case ongoing; land-for-jobs scam — CBI chargesheet; currently on bail',
-    agency:'CBI + ED',
-    status:'convicted',statusLabel:'Convicted (Fodder) · More Cases',
-    family:'Son Tejashwi Yadav — Dy CM Bihar (also under probe); daughter Misa Bharti — MP (ED case)',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'politician', name:'Tejashwi Yadav',
-    role:'Dy CM Bihar · RJD · Lalu's son',
-    case:'Land-for-jobs scam (IRCTC); CBI chargesheet; ED money laundering case; bail granted; trial ongoing',
-    agency:'CBI + ED',
-    status:'chargesheet',statusLabel:'Chargesheet · Trial Ongoing',
-    family:'Father Lalu Prasad — convicted; sister Misa Bharti MP (ED case)',
-    familyFlag:false,
-    source:'NDTV', sourceUrl:'https://www.ndtv.com'
-  },
-  {
-    type:'politician', name:'Misa Bharti',
-    role:'MP Pataliputra · RJD · Lalu's daughter',
-    case:'ED money laundering case; benami property; chargesheet filed; bail granted; trial ongoing',
-    agency:'ED',
-    status:'chargesheet',statusLabel:'Chargesheet Filed',
-    family:'Father Lalu Prasad — convicted; brother Tejashwi — Dy CM (under probe)',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  },
-  {
-    type:'politician', name:'Sharad Pawar',
-    role:'NCP (SP) Chief · Fmr Union Minister',
-    case:'Maharashtra State Cooperative Bank scam; ED probe; FIR by EOW; case ongoing for years with minimal progress',
-    agency:'ED + EOW',
-    status:'ongoing',statusLabel:'Under Investigation',
-    family:'Nephew Ajit Pawar — Dy CM Maharashtra (also under probe); daughter Supriya Sule — MP',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'politician', name:'Ajit Pawar',
-    role:'Dy CM Maharashtra · NCP',
-    case:'Maharashtra Irrigation scam ₹70,000 Cr; MSC Bank scam; ED probe; joined BJP alliance — cases seemingly stalled',
-    agency:'ED + EOW',
-    status:'ongoing',statusLabel:'Cases Stalled Post-Alliance',
-    family:'Uncle Sharad Pawar — NCP-SP chief (also under probe)',
-    familyFlag:false,
-    source:'The Wire', sourceUrl:'https://thewire.in'
-  },
-  {
-    type:'politician', name:'P. Chidambaram',
-    role:'Fmr FM · Congress · RS MP',
-    case:'INX Media case — CBI and ED; arrested Aug 2019; bail granted; trial ongoing; Aircel-Maxis case also pending',
-    agency:'CBI + ED',
-    status:'bailed',statusLabel:'On Bail · Trial Ongoing',
-    family:'Son Karti Chidambaram — MP (also ED/CBI accused in same case)',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  },
-  {
-    type:'politician', name:'Karti Chidambaram',
-    role:'MP Sivaganga · Congress · P. Chidambaram's son',
-    case:'INX Media case (same as father); Aircel-Maxis FEMA violation; passport issuance bribery; bail granted; trial ongoing',
-    agency:'CBI + ED',
-    status:'bailed',statusLabel:'On Bail · Trial Ongoing',
-    family:'Father P. Chidambaram — fmr FM (co-accused in same case)',
-    familyFlag:false,
-    source:'Bar & Bench', sourceUrl:'https://www.barandbench.com'
-  },
-  {
-    type:'politician', name:'D.K. Shivakumar',
-    role:'CM Karnataka · Congress',
-    case:'Income tax disproportionate assets case; ED money laundering; arrested 2019; bail granted; cases ongoing',
-    agency:'ED + IT Dept',
-    status:'bailed',statusLabel:'On Bail · Cases Ongoing',
-    family:'Brother D.K. Suresh — fmr MP (also ED probe)',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'politician', name:'Naveen Patnaik',
-    role:'Fmr CM Odisha · BJD Chief',
-    case:'Mining lease irregularities; chit fund scam political links; no direct FIR; CBI probing BJD-era contracts',
-    agency:'CBI (Peripheral)',
-    status:'ongoing',statusLabel:'Under Scrutiny',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'Business Standard', sourceUrl:'https://www.business-standard.com'
-  },
-  {
-    type:'politician', name:'Suresh Prabhu',
-    role:'Fmr Union Minister · BJP',
-    case:'No criminal case; RTI reveals ministry decisions favoured specific contractors during tenure; no FIR filed',
-    agency:'None',
-    status:'discharged',statusLabel:'No Case Filed',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'The Wire', sourceUrl:'https://thewire.in'
-  },
-  {
-    type:'politician', name:'Mukhtar Ansari',
-    role:'Fmr MLA UP (deceased Apr 2024) · BSP/Independent',
-    case:'Convicted in multiple murder, extortion, gangster cases; died in Banda jail Apr 2024; 60+ cases registered during lifetime',
-    agency:'UP STF + CBI',
-    status:'convicted',statusLabel:'Convicted — Deceased',
-    family:'Son Abbas Ansari — MLA (also FIR pending)',
-    familyFlag:false,
-    source:'NDTV', sourceUrl:'https://www.ndtv.com'
-  },
-  {
-    type:'politician', name:'Atiq Ahmed',
-    role:'Fmr MP/MLA UP (deceased Apr 2023) · Independent',
-    case:'Convicted in Umesh Pal murder; shot dead while in police custody Apr 2023; 100+ cases registered',
-    agency:'UP Police + CBI',
-    status:'convicted',statusLabel:'Convicted — Killed in Custody',
-    family:'Son Umar — arrested; brother Ashraf — shot dead same night',
-    familyFlag:false,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
+  { type:'politician', name:'Hemant Soren',      post:'Chief Minister, Jharkhand (JMM)',          charge:'Land scam — ED arrested Jan 2024; returned as CM on bail; trial ongoing',                         agency:'ED',       status:'bailed',      label:'On Bail · CM in Office' },
+  { type:'politician', name:'D.K. Shivakumar',   post:'Chief Minister, Karnataka (Congress)',      charge:'Disproportionate assets & money laundering — ED case ongoing; arrested 2019, bail granted',       agency:'ED + IT',  status:'ongoing',     label:'Under Trial · CM in Office' },
+  { type:'politician', name:'Tejashwi Yadav',     post:'Leader of Opposition, Bihar (RJD)',         charge:'Land-for-jobs scam (IRCTC) — CBI chargesheet; ED money laundering; bail granted',                 agency:'CBI + ED', status:'chargesheet', label:'Chargesheet Filed' },
+  { type:'politician', name:'Abhishek Banerjee',  post:'MP Diamond Harbour · TMC (Mamata nephew)', charge:'Coal levy & cattle smuggling scams — ED chargesheet; wife summoned for foreign remittances',       agency:'ED + CBI', status:'chargesheet', label:'Chargesheet Filed' },
+  { type:'politician', name:'Ajit Pawar',         post:'Deputy Chief Minister, Maharashtra (NCP)', charge:'Irrigation scam ₹70,000 Cr; MSC Bank scam — ED probe; cases stalled after joining BJP alliance',   agency:'ED + EOW', status:'ongoing',     label:'Cases Stalled · DyCM in Office' },
+  { type:'politician', name:'Karti Chidambaram',  post:'MP Sivaganga (Congress)',                  charge:'INX Media bribery; Aircel-Maxis FEMA; passport issuance bribery — CBI & ED; bail granted',         agency:'CBI + ED', status:'bailed',      label:'On Bail · MP in Office' },
+  { type:'politician', name:'Misa Bharti',        post:'MP Pataliputra (RJD)',                     charge:'ED money laundering & benami property — chargesheet filed; bail granted; trial ongoing',             agency:'ED',       status:'chargesheet', label:'Chargesheet · MP in Office' },
+  { type:'politician', name:'Arvind Kejriwal',    post:'AAP National Convenor (Fmr CM Delhi)',     charge:'Delhi Liquor Policy scam — ED & CBI; arrested Mar 2024; SC bail Sep 2024; trial ongoing',           agency:'ED + CBI', status:'bailed',      label:'On Bail · Trial Ongoing' },
+  { type:'politician', name:'K. Chandrashekar Rao', post:'MP (BRS) · Fmr CM Telangana',           charge:'Dharani portal land scam; phone tapping — ED investigation & Telangana SIT FIR ongoing',            agency:'ED + SIT', status:'ongoing',     label:'Under Investigation' },
+  { type:'politician', name:'Sharad Pawar',       post:'MP (NCP-SP) · Fmr Union Minister',        charge:'Maharashtra Cooperative Bank scam — ED probe & EOW FIR; case dragging for years',                   agency:'ED + EOW', status:'ongoing',     label:'Under Investigation · MP in Office' },
+  { type:'politician', name:'P. Chidambaram',     post:'MP Rajya Sabha (Congress) · Fmr FM',      charge:'INX Media bribery — CBI & ED; arrested 2019; bail granted; Aircel-Maxis also pending',              agency:'CBI + ED', status:'bailed',      label:'On Bail · MP in Office' },
+  { type:'politician', name:'Lalu Prasad Yadav',  post:'RJD Chief · Fmr CM Bihar',                charge:'Fodder scam — convicted in 4 cases; land-for-jobs scam — CBI chargesheet; on bail',                 agency:'CBI + ED', status:'convicted',   label:'Convicted · More Cases Pending' },
+  { type:'politician', name:'Robert Vadra',       post:'Businessman · Son-in-law of Sonia Gandhi', charge:'Bikaner land scam ₹700 Cr; Haryana land deals — ED multiple chargesheets; HC protection from arrest', agency:'ED',     status:'ongoing',     label:'Under Trial · Protected by HC' },
 
-  // ══════════ JUDGES WITH FAMILY JUDICIAL LINKS ══════════
-  {
-    type:'judge', name:'Justice (Retd.) K.G. Balakrishnan',
-    role:'Fmr CJI · Fmr NHRC Chair',
-    case:'Disproportionate assets probe against relatives; DA case against brother-in-law P.V. Sreenijan and family; SC judge himself not directly charged but scrutinised',
-    agency:'Kerala Vigilance (relatives)',
-    status:'ongoing',statusLabel:'Relatives Under Probe',
-    family:'Brother-in-law P.V. Sreenijan (fmr court officer) — DA case filed; family assets questioned',
-    familyFlag:true,
-    source:'The Hindu', sourceUrl:'https://www.thehindu.com'
-  },
-  {
-    type:'judge', name:'Justice (Retd.) R.M. Lodha',
-    role:'Fmr CJI',
-    case:'No personal case; appointed BCCI reforms committee; implementation controversies; no criminal allegation',
-    agency:'None',
-    status:'discharged',statusLabel:'No Case',
-    family:'No known relative judges',
-    familyFlag:false,
-    source:'LiveLaw', sourceUrl:'https://www.livelaw.in'
-  }
+  // ══ JUDGES — SITTING / ACTIVE INQUIRY ══
+  { type:'judge', name:'Justice Yashwant Varma',  post:'Judge, Allahabad HC (fmr Delhi HC)',       charge:'Unaccounted cash found at official residence during fire Mar 2025 — SC in-house inquiry; Bar Council demands impeachment', agency:'SC Committee', status:'inquiry', label:'In-House Inquiry · Still on Bench' },
+  { type:'judge', name:'Justice (Retd.) Nirmal Yadav', post:'Fmr Judge, Punjab & Haryana HC',     charge:'Cash-at-doorstep bribery scam 2008 — ₹15 lakh bribe; CBI chargesheet; trial ongoing 15+ years',   agency:'CBI',      status:'ongoing',     label:'Trial Ongoing 15+ Years' },
+  { type:'judge', name:'Justice (Retd.) I.M. Quddusi', post:'Fmr Judge, Orissa HC',              charge:'Agreed to influence SC bench in medical college case for money — CBI arrested 2017; trial ongoing',   agency:'CBI',      status:'ongoing',     label:'Trial Ongoing' },
+
 ];
 
 function statusClass(s){
-  const m={ongoing:'st-ongoing',inquiry:'st-inquiry',convicted:'st-convicted',acquitted:'st-acquitted',
-    chargesheet:'st-chargesheet',discharged:'st-discharged',absconding:'st-absconding',bailed:'st-bailed'};
-  return m[s]||'st-ongoing';
+  return {ongoing:'st-ongoing',inquiry:'st-inquiry',convicted:'st-convicted',
+    chargesheet:'st-chargesheet',bailed:'st-bailed'}[s]||'st-ongoing';
 }
 
 function renderTracker(data){
@@ -714,48 +447,44 @@ function renderTracker(data){
   const empty = document.getElementById('tracker-empty');
   const count = document.getElementById('tracker-count');
   if(!data.length){
-    tbody.innerHTML=''; empty.style.display='block';
+    tbody.innerHTML='';
+    empty.style.display='block';
     count.textContent='0 records';
     return;
   }
   empty.style.display='none';
-  count.textContent=data.length+' record'+(data.length===1?'':'s');
+  count.textContent = data.length + ' record'+(data.length===1?'':'s');
   tbody.innerHTML = data.map(r=>`
-    <tr class="tr-${r.type}" data-type="${r.type}" data-status="${r.status}" data-family="${r.familyFlag?'yes':'no'}">
+    <tr style="border-left:3px solid ${r.type==='judge'?'#8b0000':'#0a4a7a'}">
       <td>
-        ${r.name}
-        <div style="font-size:9px;color:var(--muted);margin-top:2px;font-family:'Source Sans 3',sans-serif;font-weight:400;">${r.type==='judge'?'⚖ Judge':'🏛 Politician'}</div>
+        <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink)">${r.name}</div>
+        <div style="font-family:'Source Sans 3',sans-serif;font-size:9px;color:#fff;background:${r.type==='judge'?'#8b0000':'#0a4a7a'};display:inline-block;padding:1px 6px;border-radius:2px;margin-top:3px">${r.type==='judge'?'⚖ JUDGE':'🏛 POLITICIAN'}</div>
       </td>
-      <td style="font-size:10px;color:var(--muted)">${r.role}</td>
-      <td style="font-size:11px;line-height:1.5">${r.case}</td>
-      <td><span style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;color:var(--rule)">${r.agency}</span></td>
-      <td><span class="st ${statusClass(r.status)}">${r.statusLabel}</span></td>
-      <td style="font-size:10px;line-height:1.5;color:${r.familyFlag?'#8b0000':'var(--muted)'}">
-        ${r.familyFlag?'<span class="fam-badge">⚠ FAMILY LINK</span><br>':''}${r.family}
-      </td>
-      <td><a href="${r.sourceUrl}" target="_blank" class="src" style="font-size:10px">${r.source}</a></td>
+      <td style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted);line-height:1.4">${r.post}</td>
+      <td style="font-family:'Source Serif 4',serif;font-size:12px;line-height:1.55;color:#333">${r.charge}</td>
+      <td style="text-align:center"><span style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;color:var(--rule)">${r.agency}</span></td>
+      <td><span class="st ${statusClass(r.status)}">${r.label}</span></td>
     </tr>`).join('');
 }
 
 function filterTracker(){
   const q = document.getElementById('tracker-search').value.toLowerCase();
   const f = document.getElementById('tracker-filter').value;
-  let data = TRACKER_DATA.filter(r=>{
-    const text=(r.name+r.role+r.case+r.agency+r.family).toLowerCase();
+  const data = TRACKER_DATA.filter(r=>{
+    const text = (r.name+r.post+r.charge+r.agency).toLowerCase();
     const matchQ = !q || text.includes(q);
-    let matchF = true;
-    if(f==='judge') matchF=r.type==='judge';
-    else if(f==='politician') matchF=r.type==='politician';
-    else if(f==='ongoing') matchF=r.status==='ongoing'||r.status==='bailed'||r.status==='chargesheet'||r.status==='inquiry';
-    else if(f==='convicted') matchF=r.status==='convicted';
-    else if(f==='acquitted') matchF=r.status==='acquitted'||r.status==='discharged';
-    else if(f==='family') matchF=r.familyFlag;
+    const matchF = f==='all' ? true
+      : f==='judge' ? r.type==='judge'
+      : f==='politician' ? r.type==='politician'
+      : f==='convicted' ? r.status==='convicted'
+      : f==='chargesheet' ? r.status==='chargesheet'
+      : f==='ongoing' ? (r.status==='ongoing'||r.status==='bailed'||r.status==='inquiry')
+      : true;
     return matchQ && matchF;
   });
   renderTracker(data);
 }
 
-// Initial render
 renderTracker(TRACKER_DATA);
 </script>
 
@@ -867,19 +596,92 @@ renderTracker(TRACKER_DATA);
 <!-- TAB 3: ECONOMY (Oil + INR Currency Tracker)            -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <div class="pane on" id="pane-economy">
-<div class="subnav">
-  <button class="sbtn on" onclick="ssw('oil',this)">🛢 Oil Prices</button>
-  <button class="sbtn" onclick="ssw('inr',this)">💱 INR vs World</button>
-  <button class="sbtn" onclick="ssw('taxsub',this)">📊 Tax Burden</button>
-</div>
 
-<!-- TODAY'S BREAKING ECONOMY NEWS — always visible, hardcoded latest -->
+<!-- TODAY'S BREAKING ECONOMY NEWS — always visible -->
 <div style="background:#fff3e0;border-left:4px solid #b5181c;padding:10px 20px;margin:0;display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
   <span style="font-family:'Source Sans 3',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;color:#fff;background:#b5181c;padding:3px 8px;border-radius:2px;white-space:nowrap;">🔴 TODAY · 25 MAY 2026</span>
   <div>
     <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#1a1a1a;line-height:1.3;">Petrol at ₹104.92/L, Diesel ₹93.44/L in Delhi — 4th fuel price hike in 2 weeks driven by Iran-war crude spike</div>
     <div style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#555;margin-top:3px;">Brent crude ~$88/bbl · OMCs raise prices citing import cost surge · Middle-class bears full brunt with no govt subsidy</div>
   </div>
+</div>
+
+<!-- ══ EXCHANGE RATE TRACKER — always visible at top ══ -->
+<div style="padding:14px 20px 0;">
+  <div class="ctitle" style="margin-bottom:2px;">💱 INR Exchange Rate Tracker · Live</div>
+  <div class="csub" style="margin-bottom:12px;">₹ per 1 unit of foreign currency · May 2026 · Source: RBI / Market</div>
+
+  <!-- Key rate cards — always shown -->
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px;" class="inr-grid">
+    <div class="tcard blue" style="padding:8px 10px;">
+      <div class="tclabel">USD</div>
+      <div class="tcval blue" style="font-size:18px;" id="inr-usd">₹85.60</div>
+      <div class="tcsub" style="color:#b5181c">▲ +1.7% YoY</div>
+    </div>
+    <div class="tcard blue" style="padding:8px 10px;">
+      <div class="tclabel">EUR</div>
+      <div class="tcval blue" style="font-size:18px;" id="inr-eur">₹93.20</div>
+      <div class="tcsub" style="color:#b5181c">▲ +2.0% YoY</div>
+    </div>
+    <div class="tcard blue" style="padding:8px 10px;">
+      <div class="tclabel">GBP</div>
+      <div class="tcval blue" style="font-size:18px;" id="inr-gbp">₹108.90</div>
+      <div class="tcsub" style="color:#b5181c">▲ +1.6% YoY</div>
+    </div>
+    <div class="tcard" style="padding:8px 10px;">
+      <div class="tclabel">JPY</div>
+      <div class="tcval" style="font-size:18px;" id="inr-jpy">₹0.582</div>
+      <div class="tcsub" style="color:#1a6b2e">▲ +6.0% (Yen up)</div>
+    </div>
+    <div class="tcard" style="padding:8px 10px;">
+      <div class="tclabel">AED</div>
+      <div class="tcval" style="font-size:18px;" id="inr-aed">₹23.30</div>
+      <div class="tcsub">Stable · pegged USD</div>
+    </div>
+    <div class="tcard" style="padding:8px 10px;">
+      <div class="tclabel">CNY</div>
+      <div class="tcval" style="font-size:18px;" id="inr-cny">₹11.82</div>
+      <div class="tcsub" style="color:#b5181c">▲ +2.1% YoY</div>
+    </div>
+  </div>
+
+  <!-- Full currency table — always visible -->
+  <details style="margin-bottom:14px;">
+    <summary style="font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:600;color:var(--accent);cursor:pointer;padding:4px 0;letter-spacing:.5px;">▸ View all currencies (15 currencies)</summary>
+    <table class="ctable" style="margin-top:8px;">
+      <thead><tr><th>Currency</th><th>Code</th><th>₹ per 1 unit</th><th>1Y Change</th><th>5Y Change</th><th>Key Driver</th></tr></thead>
+      <tbody>
+        <tr><td>US Dollar</td><td>USD</td><td>85.60</td><td class="dn">▲ +1.7%</td><td class="dn">▲ +18.0%</td><td>Iran conflict oil pressure, FII outflows</td></tr>
+        <tr><td>Euro</td><td>EUR</td><td>93.20</td><td class="dn">▲ +2.0%</td><td class="dn">▲ +14.4%</td><td>ECB policy, EU-India trade</td></tr>
+        <tr><td>British Pound</td><td>GBP</td><td>108.90</td><td class="dn">▲ +1.6%</td><td class="dn">▲ +10.1%</td><td>UK-India FTA, diaspora remittances</td></tr>
+        <tr><td>Swiss Franc</td><td>CHF</td><td>96.40</td><td class="dn">▲ +2.3%</td><td class="dn">▲ +20.6%</td><td>Safe-haven demand, Iran war flight</td></tr>
+        <tr><td>Japanese Yen</td><td>JPY</td><td>0.582</td><td class="up">▲ +6.0% (Yen up)</td><td class="up">▼ -7.2%</td><td>BOJ rate normalisation underway</td></tr>
+        <tr><td>Chinese Yuan</td><td>CNY</td><td>11.82</td><td class="dn">▲ +2.1%</td><td class="dn">▲ +7.3%</td><td>PBOC controls, India-China trade deficit</td></tr>
+        <tr><td>UAE Dirham</td><td>AED</td><td>23.30</td><td class="dn">▲ +1.7%</td><td class="dn">▲ +4.8%</td><td>AED pegged to USD; remittance key</td></tr>
+        <tr><td>Saudi Riyal</td><td>SAR</td><td>22.83</td><td class="dn">▲ +1.8%</td><td class="dn">▲ +4.7%</td><td>Oil price linkage; pegged to USD</td></tr>
+        <tr><td>Singapore Dollar</td><td>SGD</td><td>64.10</td><td class="dn">▲ +1.9%</td><td class="dn">▲ +11.2%</td><td>Regional hub; FDI flows to India</td></tr>
+        <tr><td>Australian Dollar</td><td>AUD</td><td>55.40</td><td class="dn">▲ +2.2%</td><td class="dn">▲ +5.0%</td><td>Commodity cycle, RBA policy</td></tr>
+        <tr><td>Canadian Dollar</td><td>CAD</td><td>62.70</td><td class="dn">▲ +2.1%</td><td class="dn">▲ +5.9%</td><td>Oil exports, India-Canada relations</td></tr>
+        <tr><td>South Korean Won</td><td>KRW</td><td>0.0624</td><td class="dn">▲ +2.0%</td><td class="dn">▲ +9.5%</td><td>Tech sector, semiconductor trade</td></tr>
+        <tr><td>Pakistani Rupee</td><td>PKR</td><td>0.308</td><td class="up">▼ -4.2%</td><td class="up">▼ -58.4%</td><td>Pakistan IMF programme ongoing</td></tr>
+        <tr><td>Bangladesh Taka</td><td>BDT</td><td>0.714</td><td class="dn">▲ +2.0%</td><td class="up">▼ -6.4%</td><td>Garment exports, political transition</td></tr>
+        <tr><td>Sri Lanka Rupee</td><td>LKR</td><td>0.274</td><td class="up">▼ -5.0%</td><td class="up">▼ -48.7%</td><td>Crisis recovery; tourism rebound</td></tr>
+      </tbody>
+    </table>
+  </details>
+</div>
+
+<style>
+@media(max-width:700px){.inr-grid{grid-template-columns:repeat(3,1fr)!important}}
+@media(max-width:400px){.inr-grid{grid-template-columns:repeat(2,1fr)!important}}
+details summary::-webkit-details-marker{display:none}
+details[open] summary{color:var(--muted)}
+</style>
+
+<!-- SUB-TABS: Oil / Tax only (INR moved to top) -->
+<div class="subnav" style="margin-top:4px;">
+  <button class="sbtn on" onclick="ssw('oil',this)">🛢 Oil & Fuel Prices</button>
+  <button class="sbtn" onclick="ssw('taxsub',this)">📊 Tax Burden</button>
 </div>
 
 <!-- OIL SUB-PANE -->
@@ -929,61 +731,6 @@ renderTracker(TRACKER_DATA);
     ▸ <b>Price freeze of 2022:</b> Despite Brent surging past $105/barrel, government froze retail prices for 137 days. OMCs reported combined losses of ₹18,480 crore in Q1 FY23.<br><br>
     ▸ <b>Iran War fuel hikes (2026):</b> Petrol price raised 4 times in 2 weeks following Iran conflict-driven crude spike; Delhi petrol crossed ₹100/L for first time since 2022.<br><br>
     <b>Bottom Line:</b> India's retail fuel prices are a political instrument, not a market price.
-  </div>
-</div>
-</div>
-
-<!-- INR SUB-PANE -->
-<div class="subpane" id="sub-inr">
-<div class="carea">
-  <div class="ctitle">INR Exchange Rate Tracker · Rupee vs Major World Currencies</div>
-  <div class="csub">How many Indian Rupees (₹) per 1 unit of foreign currency · Historical trend 2020–2025 · Source: RBI / Bloomberg</div>
-
-  <!-- INR Stat Cards -->
-  <div class="tgrid" style="padding:0 0 16px">
-    <div class="tcard blue"><div class="tclabel">USD (US Dollar)</div><div class="tcval blue">₹85.60</div><div class="tcsub">▲ 1.7% YoY · Iran war pressure</div></div>
-    <div class="tcard blue"><div class="tclabel">EUR (Euro)</div><div class="tcval blue">₹93.20</div><div class="tcsub">▲ 2.0% YoY · ECB rate effect</div></div>
-    <div class="tcard blue"><div class="tclabel">GBP (Pound)</div><div class="tcval blue">₹108.90</div><div class="tcsub">▲ 1.6% YoY · UK-India FTA talks</div></div>
-    <div class="tcard"><div class="tclabel">JPY (Japanese Yen)</div><div class="tcval">₹0.582</div><div class="tcsub">▲ 6.0% — Yen recovering vs INR</div></div>
-    <div class="tcard"><div class="tclabel">CNY (Chinese Yuan)</div><div class="tcval">₹11.82</div><div class="tcsub">▲ 2.1% YoY · Trade tensions</div></div>
-    <div class="tcard"><div class="tclabel">AED (UAE Dirham)</div><div class="tcval">₹23.30</div><div class="tcsub">Stable · Remittance corridor</div></div>
-  </div>
-
-  <canvas id="inrc" height="230"></canvas>
-
-  <!-- Full Currency Comparison Table -->
-  <div style="margin-top:18px">
-    <div class="ctitle" style="font-size:15px;margin-bottom:8px">₹ vs All Major Currencies · May 2026</div>
-    <table class="ctable">
-      <thead><tr><th>Currency</th><th>Code</th><th>₹ per 1 unit</th><th>1Y Change</th><th>5Y Change</th><th>Key Driver</th></tr></thead>
-      <tbody>
-        <tr><td>US Dollar</td><td>USD</td><td>85.60</td><td class="dn">▲ +1.7% (INR weaker)</td><td class="dn">▲ +18.0%</td><td>Iran conflict oil pressure, FII outflows</td></tr>
-        <tr><td>Euro</td><td>EUR</td><td>93.20</td><td class="dn">▲ +2.0%</td><td class="dn">▲ +14.4%</td><td>ECB policy, EU-India trade</td></tr>
-        <tr><td>British Pound</td><td>GBP</td><td>108.90</td><td class="dn">▲ +1.6%</td><td class="dn">▲ +10.1%</td><td>UK-India FTA, diaspora remittances</td></tr>
-        <tr><td>Swiss Franc</td><td>CHF</td><td>96.40</td><td class="dn">▲ +2.3%</td><td class="dn">▲ +20.6%</td><td>Safe-haven demand, Iran war flight</td></tr>
-        <tr><td>Japanese Yen</td><td>JPY</td><td>0.582</td><td class="dn">▲ +6.0% (Yen recovering)</td><td class="up">▼ -7.2%</td><td>BOJ rate normalisation underway</td></tr>
-        <tr><td>Chinese Yuan</td><td>CNY</td><td>11.82</td><td class="dn">▲ +2.1%</td><td class="dn">▲ +7.3%</td><td>PBOC controls, India-China trade deficit</td></tr>
-        <tr><td>UAE Dirham</td><td>AED</td><td>23.30</td><td class="dn">▲ +1.7%</td><td class="dn">▲ +4.8%</td><td>AED pegged to USD; remittance key</td></tr>
-        <tr><td>Saudi Riyal</td><td>SAR</td><td>22.83</td><td class="dn">▲ +1.8%</td><td class="dn">▲ +4.7%</td><td>Oil price linkage; pegged to USD</td></tr>
-        <tr><td>Singapore Dollar</td><td>SGD</td><td>64.10</td><td class="dn">▲ +1.9%</td><td class="dn">▲ +11.2%</td><td>Regional hub; FDI flows to India</td></tr>
-        <tr><td>Australian Dollar</td><td>AUD</td><td>55.40</td><td class="dn">▲ +2.2%</td><td class="dn">▲ +5.0%</td><td>Commodity cycle, RBA policy</td></tr>
-        <tr><td>Canadian Dollar</td><td>CAD</td><td>62.70</td><td class="dn">▲ +2.1%</td><td class="dn">▲ +5.9%</td><td>Oil exports, India-Canada relations</td></tr>
-        <tr><td>South Korean Won</td><td>KRW</td><td>0.0624</td><td class="dn">▲ +2.0%</td><td class="dn">▲ +9.5%</td><td>Tech sector, semiconductor trade</td></tr>
-        <tr><td>Pakistani Rupee</td><td>PKR</td><td>0.308</td><td class="up">▼ -4.2% (recovering slightly)</td><td class="up">▼ -58.4%</td><td>Pakistan IMF programme ongoing</td></tr>
-        <tr><td>Bangladesh Taka</td><td>BDT</td><td>0.714</td><td class="dn">▲ +2.0%</td><td class="up">▼ -6.4%</td><td>Garment exports, political transition</td></tr>
-        <tr><td>Sri Lanka Rupee</td><td>LKR</td><td>0.274</td><td class="up">▼ -5.0% (INR weaker vs LKR)</td><td class="up">▼ -48.7%</td><td>Crisis recovery; tourism rebound</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="sbox blue" style="margin-top:16px">
-    <b>Why is the Rupee weakening against USD?</b><br><br>
-    ▸ <b>Structural oil import bill:</b> India imports ~85% of crude oil needs; a stronger dollar directly raises the import bill in rupee terms, creating persistent demand for USD and supply of INR.<br><br>
-    ▸ <b>FII outflows:</b> When the US Federal Reserve raises rates, foreign institutional investors pull capital from emerging markets like India to invest in higher-yielding US treasuries — selling Indian stocks/bonds means selling INR.<br><br>
-    ▸ <b>Current Account Deficit (CAD):</b> India consistently imports more than it exports; the trade deficit creates structural rupee selling pressure. India's CAD was 1.2% of GDP in FY2025.<br><br>
-    ▸ <b>Dollar index (DXY):</b> When the DXY strengthens globally, almost all currencies weaken vs USD — INR is no exception. This is not unique to India.<br><br>
-    ▸ <b>RBI intervention:</b> The Reserve Bank of India buys USD (sells INR) to build forex reserves during inflow periods, and sells USD (buys INR) to defend the rupee during outflow periods. India's forex reserves stand at ~$650 billion (May 2025).<br><br>
-    ▸ <b>Why INR is stronger vs Yen &amp; Pakistan Rupee:</b> Japan's central bank held near-zero rates for decades (Yen carry trade unwinding), and Pakistan's economy collapsed under debt. INR's relative stability reflects India's GDP growth even amid structural weakness vs hard currencies.
   </div>
 </div>
 </div>
@@ -1338,7 +1085,6 @@ function ssw(name,btn){
   btn.classList.add('on');
   if(name==='oil' && !oilDone) drawOil();
   if(name==='taxsub' && !taxDone) drawTax();
-  if(name==='inr' && !inrDone) drawInr();
 }
 
 let oilDone=false, taxDone=false, inrDone=false;
