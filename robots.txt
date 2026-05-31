@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Block no pages — entire site is public
+Sitemap: https://indiawatch.net/sitemap.xml
+
+# Major search engine crawlers — explicitly welcome
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
