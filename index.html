@@ -479,11 +479,11 @@ footer a:hover{color:#7a0e10}
 /* ══ SECTION LABELS ══ */
 
 /* ══ MOBILE ══ */
-@media(max-width:580px){
+@media(max-width:768px){
   .nav{display:none;flex-direction:column;padding:0;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:2px solid #c0392b;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:300}
   .nav.open{display:flex}
-  .tbtn{border-bottom:1px solid #f0ebe0!important;border-radius:0;padding:12px 16px;margin-bottom:0;width:100%;justify-content:flex-start;font-size:13px}
-  .tbtn.on{border-left:3px solid #c0392b;background:rgba(192,57,43,0.04)}
+  .tbtn{border-bottom:1px solid #f0ebe0!important;border-radius:0;padding:14px 16px;margin-bottom:0;width:100%;justify-content:flex-start;font-size:14px;min-height:44px}
+  .tbtn.on{border-left:4px solid #c0392b;background:rgba(192,57,43,0.06)}
 }
 /* ── TICKER: definitive fix — must beat deferred JS styles ── */
 .ticker-wrap{
@@ -537,66 +537,101 @@ footer a:hover{color:#7a0e10}
 
 
 /* ── 1. HAMBURGER NAV — fix: show button, anchor dropdown ── */
-@media(max-width:580px){
+@media(max-width:768px){
   .nav-outer{
     display:flex!important;
     flex-direction:row!important;
     align-items:center!important;
     position:relative!important;
-    min-height:44px;
+    min-height:52px;
+    justify-content:space-between;
+    padding:0 12px;
   }
   .nav-hamburger{
     display:flex!important;
     align-items:center;
     justify-content:center;
-    flex-shrink:0;
+    width:44px;
+    height:44px;
+    padding:0;
+    margin:0;
+    cursor:pointer;
     background:none;
     border:none;
-    cursor:pointer;
-    padding:10px 14px;
-    color:var(--ink);
-    z-index:310;
-    min-width:44px;
-    min-height:44px; /* touch target */
+    flex-shrink:0;
   }
-  .nav{
-    display:none!important;
-    flex-direction:column;
-    position:absolute;
-    top:100%;
-    left:0;
-    right:0;
-    background:#fff;
-    border-bottom:2px solid #b5181c;
-    box-shadow:0 8px 24px rgba(0,0,0,.18);
-    z-index:300;
-    padding:0;
-    max-height:80vh;
-    overflow-y:auto;
+  .nav-hamburger span{
+    display:block;
+    width:24px;
+    height:2px;
+    background:var(--dark);
+    margin:4px 0;
+    transition:all .3s;
   }
-  .nav.open{display:flex!important}
-  [data-theme="dark"] .nav{background:#13151c!important}
-  .tbtn{
-    border-bottom:1px solid #f0ebe0!important;
-    border-radius:0!important;
-    padding:14px 20px!important;
-    margin-bottom:0!important;
-    width:100%!important;
-    justify-content:flex-start!important;
-    font-size:14px!important;
-    min-height:48px; /* comfortable touch target */
-  }
-  .tbtn.on{
-    border-left:4px solid #b5181c!important;
-    border-bottom-color:#f0ebe0!important;
-    background:rgba(181,24,28,0.05)!important;
-  }
-  [data-theme="dark"] .tbtn{border-bottom-color:#292524!important}
-  [data-theme="dark"] .tbtn.on{border-bottom-color:#292524!important}
+  .nav-hamburger.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}
+  .nav-hamburger.active span:nth-child(2){opacity:0}
+  .nav-hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
 }
-@media(min-width:581px){
+/* ── ADDITIONAL MOBILE CONTROLS ── */
+@media(min-width:769px){
   .nav-hamburger{display:none!important}
   .nav{display:flex!important}
+}
+
+/* ── COMPREHENSIVE MOBILE OPTIMIZATION ── */
+@media(max-width:768px){
+  /* ── Masthead improvements ── */
+  .mh-top{padding:8px 12px;flex-wrap:wrap}
+  .mh-title{padding:10px 12px 6px}
+  .mh-title h1{font-size:clamp(24px,6vw,36px)}
+  .mh-title p{font-size:9px;letter-spacing:2px;margin-top:3px}
+  
+  /* ── Body padding ── */
+  body{padding:0}
+  .grid{padding:0 12px 16px}
+  
+  /* ── Cards with better spacing ── */
+  .card{padding:12px 14px;margin-bottom:1px}
+  .hl{font-size:clamp(14px,4vw,17px);margin-bottom:4px}
+  .cdate{font-size:9px}
+  
+  /* ── Stat cards grid ── */
+  .tgrid{grid-template-columns:repeat(2,1fr);gap:6px;padding:0 12px 8px}
+  .tclabel{font-size:9px}
+  .tcval{font-size:18px}
+  
+  /* ── Tables ── */
+  .ctable{font-size:11px}
+  .ctable th{font-size:9px;padding:8px 12px}
+  .ctable td{padding:10px 12px}
+  .ctable-outer{margin:0 12px 16px;border-radius:6px}
+  
+  /* ── Section labels ── */
+  .slabel{margin:16px 12px 0;padding:6px 12px;font-size:9px}
+  
+  /* ── Quote bar improvements ── */
+  #quote-bar{padding:10px 12px;gap:6px}
+  .qb-text{font-size:12px;line-height:1.5}
+  
+  /* ── Buttons minimum touch target ── */
+  button,.show-more-btn,a[role="button"]{min-height:44px;padding:10px 14px}
+  
+  /* ── Flex wrapping for controls ── */
+  .meta{gap:6px;font-size:11px}
+  .srcs{gap:4px}
+  .src{font-size:10px;padding:2px 7px}
+}
+
+@media(max-width:480px){
+  /* ── Extra tight spacing for very small screens ── */
+  .grid{padding:0 10px 12px}
+  .card{padding:10px 12px;margin-bottom:0}
+  .tgrid{grid-template-columns:1fr;gap:4px;padding:0 10px 6px}
+  .ctable-outer{margin:0 10px 12px}
+  .slabel{margin:12px 10px 0}
+  #quote-bar{padding:8px 10px;gap:4px}
+  .qb-text{font-size:11px}
+  .mh-title h1{font-size:clamp(20px,5vw,28px)}
 }
 
 /* ── 2. LIVE BAR — always horizontal, finger-scrollable ── */
