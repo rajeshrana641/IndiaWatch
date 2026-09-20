@@ -453,7 +453,7 @@ footer a:hover{color:#7a0e10}
 .nav-outer{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(0,0,0,.05)}
 .nav{display:flex;padding:0;overflow-x:auto;scrollbar-width:none;gap:0}
 .tbtn{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;padding:11px 16px;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .15s,border-color .15s,background .15s;display:flex;align-items:center;gap:4px}
-.tbtn.on{color:var(--accent);border-bottom-color:var(--accent);background:rgba(181,24,28,0.04);font-weight:800}
+.tbtn.on{color:var(--accent);border-bottom-color:var(--accent);background:rgba(149,72,63,0.04);font-weight:800}
 .tbtn:hover:not(.on){color:var(--ink);background:var(--paper)}
 
 /* ══ SEARCH RESULTS ══ */
@@ -929,7 +929,7 @@ body{font-size:14.5px;line-height:1.7}
 p, .sbox, .card p{max-width:62ch}
 .iw-clamp{
   display:-webkit-box;
-  -webkit-line-clamp:3;
+  -webkit-line-clamp:5;
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
@@ -960,8 +960,11 @@ p, .sbox, .card p{max-width:62ch}
       if (el.dataset.rmDone) continue;
       el.dataset.rmDone = '1';
       if (el.closest('.iw-clamp') || el.closest('.ctable') || el.closest('table')) continue;
+      // "Current status" style callouts (5px accent border) are short, load-bearing summaries —
+      // always show them in full rather than hiding the key fact behind a click.
+      if (el.closest('[style*="border-left:5px"]')) continue;
       var txt = (el.textContent||'').trim();
-      if (txt.length < 260) continue;
+      if (txt.length < 480) continue;
       el.classList.add('iw-clamp');
       var btn = document.createElement('span');
       btn.className = 'iw-readmore';
@@ -1012,7 +1015,7 @@ p, .sbox, .card p{max-width:62ch}
   </div>
 </div>
 
-
+<div class="phrase">Democracy: buffering since 1947.</div>
 
 
 
@@ -1148,6 +1151,201 @@ p, .sbox, .card p{max-width:62ch}
 <div style="padding:0 20px;">
   <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> CBDT FY25-26 data · Union Budgets 2024-25 &amp; 2025-26 · Zerodha Varsity · Basis Point Insight.</div>
 </div>
+
+<!-- ═══ SECTION 3.5: INTERACTIVE CALCULATOR ═══ -->
+<div class="slabel" style="margin-top:4px;background:#6b3a35;">🧮 Calculate Your Own Numbers</div>
+<div style="padding:6px 20px 4px;">
+  <p style="font-family:'Source Serif 4',serif;font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:10px;">
+    Enter your own salary and household spend to see your real income tax (new regime, FY 2025-26, exact slab math), your take-home, and how much tax is hiding inside your everyday spending. The budget numbers below are pre-filled with reasonable Delhi estimates that <b>scale automatically</b> with your income and number of kids, edit any of them.
+  </p>
+</div>
+
+<div style="padding:0 20px;">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px;">
+    <div>
+      <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Annual gross salary (₹)</div>
+      <input type="number" id="calc-income" value="1500000" step="50000" min="200000" style="font-family:'Source Sans 3',sans-serif;font-size:14px;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;background:var(--paper);color:var(--ink);width:160px;">
+    </div>
+    <div>
+      <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">School-going kids</div>
+      <select id="calc-kids" style="font-family:'Source Sans 3',sans-serif;font-size:14px;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;background:var(--paper);color:var(--ink);">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+    <button onclick="calcSetIncome(1200000)" class="sbtn" style="border-radius:6px;border-bottom:2px solid var(--border);">Try ₹12L</button>
+    <button onclick="calcSetIncome(1500000)" class="sbtn" style="border-radius:6px;border-bottom:2px solid var(--border);">Try ₹15L</button>
+    <button onclick="calcSetIncome(2500000)" class="sbtn" style="border-radius:6px;border-bottom:2px solid var(--border);">Try ₹25L</button>
+  </div>
+
+  <div class="ctable-outer" style="margin:0 0 12px;">
+  <table class="ctable" id="calc-table">
+  <thead><tr><th>Monthly spend</th><th style="text-align:right">₹/month</th><th>Tax rate</th><th style="text-align:right">Hidden tax</th></tr></thead>
+  <tbody id="calc-tbody"></tbody>
+  </table>
+  </div>
+
+  <div id="calc-output"></div>
+
+  <div class="sbox" style="margin-bottom:20px;"><b>How this is built:</b> income tax uses the exact FY 2025-26 new-regime slabs (0% to 4L, 5% to 8L, 10% to 12L, 15% to 16L, 20% to 20L, 25% to 24L, 30% above) plus the Section 87A rebate (zero tax if taxable income ≤ ₹12L) and 4% cess. EPF is assumed at 12% of basic pay (basic assumed at 40% of gross), a simplification, actual structures vary by employer. Category tax rates (rent/school exempt, groceries ~3%, fuel ~52% excise+VAT, GST-rated categories at 18% etc.) reflect current law; the rupee amounts are editable estimates, not government data.</div>
+</div>
+
+<script>
+(function(){
+  const RATES = {
+    rent: 0, tuition: 0, schoolExtra: 0.08, groceries: 0.03, eatingOut: 0.05,
+    fuel: 0.52, electricity: 0, mobile: 0.18, healthIns: 0.18, clothing: 0.10,
+    lpg: 0.05, domesticHelp: 0, entertainment: 0.20
+  };
+  const LABELS = {
+    rent: 'Rent', tuition: "School tuition", schoolExtra: 'School bus/books/uniform',
+    groceries: 'Groceries', eatingOut: 'Eating out / delivery', fuel: 'Fuel (petrol/diesel)',
+    electricity: 'Electricity', mobile: 'Mobile/broadband/OTT', healthIns: 'Health insurance premium',
+    clothing: 'Clothing & shopping', lpg: 'LPG cylinder', domesticHelp: 'Domestic help',
+    entertainment: 'Entertainment'
+  };
+  const NOTES = {
+    rent: 'Exempt (residential rent)', tuition: 'Exempt (education services)',
+    schoolExtra: '~8% blended', groceries: '~3% blended', eatingOut: '5% GST',
+    fuel: '~52% excise+VAT', electricity: 'Outside GST', mobile: '18% GST',
+    healthIns: '18% GST', clothing: '~10% blended', lpg: '5% GST',
+    domesticHelp: 'Exempt (unregistered)', entertainment: '~20% blended'
+  };
+  const ORDER = ['rent','tuition','schoolExtra','groceries','eatingOut','fuel','electricity','mobile','healthIns','clothing','lpg','domesticHelp','entertainment'];
+
+  function lerp(income, v12, v25){
+    const t = (income - 1200000) / (2500000 - 1200000);
+    return Math.max(0, Math.round(v12 + t*(v25-v12)));
+  }
+
+  function defaultBudget(income, kids){
+    const tuitionPerKid = lerp(income, 8000, 11000);
+    const b = {
+      rent: lerp(income, 22000, 38000),
+      tuition: kids>0 ? tuitionPerKid*kids : 0,
+      schoolExtra: kids>0 ? lerp(income, 1800, 3000)*kids : 0,
+      groceries: lerp(income, 15000, 22000),
+      eatingOut: lerp(income, 4000, 7000),
+      fuel: lerp(income, 6000, 10000),
+      electricity: lerp(income, 3000, 4500),
+      mobile: lerp(income, 2000, 3000),
+      healthIns: lerp(income, 2500, 4500),
+      clothing: lerp(income, 4000, 6000),
+      lpg: 350,
+      domesticHelp: lerp(income, 4000, 10000),
+      entertainment: lerp(income, 1500, 4000)
+    };
+    return b;
+  }
+
+  function computeTax(gross){
+    const stdDed = 75000;
+    const taxable = Math.max(0, gross - stdDed);
+    const widths = [400000,400000,400000,400000,400000,400000,Infinity];
+    const rates  = [0,0.05,0.10,0.15,0.20,0.25,0.30];
+    let remaining = taxable, tax = 0;
+    for(let i=0;i<widths.length;i++){
+      const chunk = Math.min(remaining, widths[i]);
+      tax += chunk*rates[i];
+      remaining -= chunk;
+      if(remaining<=0) break;
+    }
+    let rebateApplied = false;
+    if(taxable <= 1200000){ tax = 0; rebateApplied = true; }
+    const cess = tax>0 ? tax*0.04 : 0;
+    return {taxable, tax, cess, total: tax+cess, rebateApplied};
+  }
+
+  function fmt(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+  function renderTable(budget){
+    const tbody = document.getElementById('calc-tbody');
+    tbody.innerHTML = ORDER.map(key => {
+      const rate = RATES[key];
+      return `<tr>
+        <td>${LABELS[key]}</td>
+        <td style="text-align:right"><input type="number" data-key="${key}" value="${budget[key]}" step="100" style="width:90px;text-align:right;font-family:'Source Sans 3',sans-serif;font-size:12px;padding:4px 6px;border:1px solid var(--border);border-radius:4px;background:var(--card-bg);color:var(--ink);"></td>
+        <td style="font-size:11px;color:var(--muted)">${NOTES[key]}</td>
+        <td style="text-align:right" id="calc-htax-${key}">${fmt(budget[key]*rate)}</td>
+      </tr>`;
+    }).join('');
+    tbody.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', calcRun);
+    });
+  }
+
+  window.calcRun = function(){
+    const income = Math.max(0, parseInt(document.getElementById('calc-income').value) || 0);
+    const budget = {};
+    let totalSpend = 0, totalHiddenTax = 0;
+    document.querySelectorAll('#calc-tbody input[data-key]').forEach(inp => {
+      const key = inp.dataset.key;
+      const val = Math.max(0, parseInt(inp.value) || 0);
+      budget[key] = val;
+      const htax = val * RATES[key];
+      totalSpend += val;
+      totalHiddenTax += htax;
+      const cell = document.getElementById('calc-htax-'+key);
+      if (cell) cell.textContent = fmt(htax);
+    });
+
+    const t = computeTax(income);
+    const basic = income * 0.40;
+    const epf = basic * 0.12;
+    const takehome = income - t.total - epf;
+    const takehomeMonthly = takehome/12;
+    const monthlySavings = takehomeMonthly - totalSpend;
+    const annualSavings = monthlySavings*12;
+    const effectiveRate = income>0 ? ((t.total + totalHiddenTax*12) / income * 100) : 0;
+
+    document.getElementById('calc-output').innerHTML = `
+      <div class="tgrid" style="margin-top:4px;">
+        <div class="tcard"><div class="tclabel">Taxable income</div><div class="tcval" style="font-size:17px;">${fmt(t.taxable)}</div><div class="tcsub">After ₹75,000 standard deduction</div></div>
+        <div class="tcard" style="border-top-color:${t.rebateApplied?'#166534':'#95483f'}"><div class="tclabel">Income tax + cess</div><div class="tcval" style="font-size:17px;color:${t.rebateApplied?'#166534':'#95483f'}">${fmt(t.total)}</div><div class="tcsub">${t.rebateApplied?'Zero, 87A rebate applies':'No rebate above ₹12L taxable'}</div></div>
+        <div class="tcard"><div class="tclabel">EPF (assumed)</div><div class="tcval" style="font-size:17px;">${fmt(epf)}</div><div class="tcsub">12% of assumed basic (40% of gross)</div></div>
+        <div class="tcard"><div class="tclabel">Take-home</div><div class="tcval" style="font-size:17px;">${fmt(takehomeMonthly)}/mo</div><div class="tcsub">${fmt(takehome)}/year</div></div>
+        <div class="tcard" style="border-top-color:#95483f"><div class="tclabel">Hidden tax in spending</div><div class="tcval" style="font-size:17px;color:#95483f">${fmt(totalHiddenTax)}/mo</div><div class="tcsub">${fmt(totalHiddenTax*12)}/year</div></div>
+        <div class="tcard" style="border-top-color:${monthlySavings>=0?'#166534':'#95483f'}"><div class="tclabel">Savings left over</div><div class="tcval" style="font-size:17px;color:${monthlySavings>=0?'#166534':'#95483f'}">${fmt(monthlySavings)}/mo</div><div class="tcsub">${fmt(annualSavings)}/year</div></div>
+      </div>
+      <div class="sbox" style="margin-top:4px;"><b>Effective total tax burden (visible + hidden): ${effectiveRate.toFixed(1)}% of gross income.</b> That's ${fmt(t.total)} in income tax plus an estimated ${fmt(totalHiddenTax*12)} a year in embedded indirect tax across the spending above.</div>
+    `;
+  };
+
+  window.calcSetIncome = function(val){
+    document.getElementById('calc-income').value = val;
+    const kids = parseInt(document.getElementById('calc-kids').value) || 0;
+    renderTable(defaultBudget(val, kids));
+    calcRun();
+  };
+
+  function init(){
+    const incomeEl = document.getElementById('calc-income');
+    const kidsEl = document.getElementById('calc-kids');
+    if (!incomeEl || !kidsEl) return;
+    incomeEl.addEventListener('change', () => {
+      const income = parseInt(incomeEl.value) || 0;
+      const kids = parseInt(kidsEl.value) || 0;
+      renderTable(defaultBudget(income, kids));
+      calcRun();
+    });
+    kidsEl.addEventListener('change', () => {
+      const income = parseInt(incomeEl.value) || 0;
+      const kids = parseInt(kidsEl.value) || 0;
+      renderTable(defaultBudget(income, kids));
+      calcRun();
+    });
+    renderTable(defaultBudget(1500000, 1));
+    calcRun();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 
 <!-- ═══ SECTION 4: 10-YEAR TREND ═══ -->
 <div class="slabel" style="margin-top:4px;">📈 10-Year Trend: Up, Not Down</div>
@@ -1682,7 +1880,7 @@ The Right to Information Act 2005 was the single most powerful accountability to
 .rr-nav{display:flex;background:var(--card-bg);border-bottom:2px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .rr-nav::-webkit-scrollbar{display:none}
 .rr-tab{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;padding:10px 16px;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
-.rr-tab.on{color:var(--accent);border-bottom-color:var(--accent);background:rgba(181,24,28,0.05);font-weight:800}
+.rr-tab.on{color:var(--accent);border-bottom-color:var(--accent);background:rgba(149,72,63,0.05);font-weight:800}
 .rr-tab:hover:not(.on){color:var(--ink);background:var(--paper)}
 .rr-pane{display:none;padding:0}.rr-pane.on{display:block}
 .rr-tbl{width:100%;border-collapse:collapse;font-family:'Source Sans 3',sans-serif;font-size:12px}
@@ -1894,7 +2092,6 @@ var PRESS=[
   {cat:'nsa',name:'Rupesh Kumar Singh',outlet:'Freelance journalist',state:'Jharkhand',trig:'Reported on Adivasi land rights and mining displacement; detained under NSA; family not informed 72 hours',law:'NSA+UAPA',year:2022,days:270,st:'rr-st-bail',sl:'Released — HC bail'},
   {cat:'killed',name:'Shubham Mani Tripathi',outlet:'Reporter (UP)',state:'UP',trig:'Filed RTI on illegal mining; wrote stories on local mafia-politician nexus; shot dead outside home',law:'Killed',year:2021,days:0,st:'rr-st-dead',sl:'Murdered — No arrest'},
   {cat:'killed',name:'Sulochan Maurya',outlet:'Journalist (UP)',state:'UP',trig:'Reporting on illegal mining in Banda; shot dead; locals alleged involvement of ruling party-linked persons',law:'Killed',year:2022,days:0,st:'rr-st-dead',sl:'Murdered — Trial pending'},
-  {cat:'it',name:'Khan Sir + 7 educators',outlet:'YouTube educators (Khan Global Studies, Abhinay Maths, ICS Coaching, Naiya Paar Ed, 4PM News)',state:'Delhi HC',trig:'Called Aaj Tak anchor Anjana Om Kashyap "bikau patrakar" and "fake news ki dukaan" after she called YouTube teachers "frauds" on NEET debate; anchor filed ₹2 Cr civil defamation suit seeking content removal from YouTube/Meta/X',law:'Civil Defamation',year:2026,days:0,st:'rr-st-ongoing',sl:'Delhi HC — response sought Jun 8'},
 ];
 function lawAg(l){var m={'UAPA':'rr-ag-uapa','UAPA+Sedition':'rr-ag-uapa','Sedition 124A':'rr-ag-sed','IPC 188':'rr-ag-sed','IT Act+IPC':'rr-ag-it','IT Act':'rr-ag-it','NSA+UAPA':'rr-ag-nsa','Killed':'rr-ag-kill'};return'<span class="rr-ag '+(m[l]||'rr-ag-it')+'">'+ l +'</span>'}
 function pressRender(rows){var el=document.getElementById('press-body');if(!el)return;el.innerHTML=rows.map(function(r){return'<tr style="border-left:3px solid '+(r.cat==='killed'?'#1c1917':r.days>365?'var(--accent)':'#c8870f')+'"><td><div class="rr-name">'+r.name+'</div><div class="rr-det">'+r.outlet+'</div></td><td style="font-size:11px">'+r.state+'</td><td style="font-size:11px;line-height:1.5">'+r.trig+'</td><td>'+lawAg(r.law)+'</td><td style="font-size:10px;color:var(--muted)">'+r.year+'</td><td><div class="rr-days">'+(r.cat==='killed'?'—':r.days)+'</div><div style="font-size:9px;color:var(--muted)">'+(r.cat==='killed'?'Killed':r.days>365?Math.floor(r.days/30)+' mo':r.days+' days')+'</div></td><td><span class="rr-st '+r.st+'">'+r.sl+'</span></td></tr>';}).join('')}
@@ -2225,7 +2422,7 @@ const TRACKER_DATA = [
   { type:'politician', level:'state',   inoffice:false, name:'Lalu Prasad Yadav',     post:'RJD Chief · Fmr CM Bihar',                  charge:'Fodder scam — convicted in 4 cases; land-for-jobs (IRCTC) — CBI chargesheet pending',                                                                                                  agency:'CBI + ED',    status:'convicted',   label:'Convicted · More Cases Pending',     source:'CBI RC-20A/1996 · CBI RC-AC1/2022 · 4 convictions' },
   { type:'politician', level:'state',   inoffice:false, name:'Robert Vadra',          post:'Businessman · Son-in-law of Sonia Gandhi',   charge:'Bikaner land scam ₹700 Cr; Haryana land deals — ED chargesheets; protected from arrest by HC',                                                                                         agency:'ED',          status:'ongoing',     label:'Under Trial · HC Protection',        source:'ED ECIR/JDZO/01/2019 · ED chargesheet 2025' },
   // Judges remain in data but filtered out of this section (shown in Bench tab)
-  { type:'judge',      level:'judge',   inoffice:false, name:'Justice Yashwant Varma', post:'Judge, Allahabad HC (fmr Delhi HC)',        charge:'Unaccounted cash at official residence during fire Mar 2025 — SC in-house inquiry; still on bench',                                                                                     agency:'SC Committee',status:'inquiry',    label:'Inquiry · Still on Bench',           source:'SC In-House Cmte · Bar Council impeachment demand' },
+  { type:'judge',      level:'judge',   inoffice:false, name:'Justice Yashwant Varma', post:'Fmr Judge, Allahabad HC (fmr Delhi HC)',        charge:'Unaccounted cash at official residence during fire Mar 2025 — SC in-house inquiry found him guilty; resigned Apr 2026 before Parliament vote; Lok Sabha still tabled the inquiry report Jul 2026',                                                                                     agency:'SC Committee',status:'ongoing',    label:'Resigned · Report Tabled Anyway',           source:'SC In-House Cmte · Lok Sabha Speaker, Jul 2026' },
   { type:'judge',      level:'judge',   inoffice:false, name:'Justice (Retd.) Nirmal Yadav', post:'Fmr Judge, Punjab & Haryana HC',     charge:'Cash-at-doorstep bribery 2008 — ₹15 lakh; CBI chargesheet; trial dragging 15+ years',                                                                                                agency:'CBI',         status:'ongoing',     label:'Trial Ongoing 15+ Yrs',              source:'CBI chargesheet · Punjab & Haryana HC records' },
   { type:'judge',      level:'judge',   inoffice:false, name:'Justice (Retd.) I.M. Quddusi', post:'Fmr Judge, Orissa HC',               charge:'Agreed to influence SC bench for money in medical college case — CBI arrested 2017; trial ongoing',                                                                                    agency:'CBI',         status:'ongoing',     label:'Trial Ongoing',                      source:'CBI RC/2017 · audio recordings in evidence' },
 ];
@@ -2976,17 +3173,18 @@ infraRender(ID);
   <th>Party / Alliance</th><th>States Governed</th><th style="text-align:right">Avg % of Budget</th><th style="text-align:right">Avg Absolute Cost</th><th>Trend Since Coming to Power</th><th>Notable</th>
 </tr></thead>
 <tbody>
-<tr style="background:#fff8f0"><td><b>AAP</b></td><td>Punjab, Delhi</td><td style="text-align:right;font-weight:700;color:#a1503f">19%</td><td style="text-align:right">₹14,850 Cr avg</td><td><span style="color:#a1503f;font-weight:700">↑ Highest increase on entry</span></td><td>Free electricity model copied by all parties</td></tr>
+<tr style="background:#fff8f0"><td><b>AAP</b></td><td>Punjab</td><td style="text-align:right;font-weight:700;color:#a1503f">19%</td><td style="text-align:right">₹14,850 Cr avg</td><td><span style="color:#a1503f;font-weight:700">↑ Highest increase on entry</span></td><td>Free electricity model copied by all parties</td></tr>
 <tr><td><b>Congress</b></td><td>Karnataka, Telangana, HP, Himachal</td><td style="text-align:right;font-weight:700;color:#a1503f">17%</td><td style="text-align:right">₹21,400 Cr avg</td><td><span style="color:#a1503f;font-weight:700">↑ Sharp jump on election win</span></td><td>Guarantee model, 5 promises pre-election</td></tr>
-<tr style="background:#fff8f0"><td><b>BJP</b></td><td>MP, Raj, UP, Guj, Har, CG, Odi, etc.</td><td style="text-align:right;font-weight:700;color:#935116">11%</td><td style="text-align:right">₹8,600 Cr avg</td><td><span style="color:#935116;font-weight:700">↑ Moderate increase, matching rivals</span></td><td>Ladli Behna / Ladki Bahin pre-election pattern</td></tr>
+<tr style="background:#fff8f0"><td><b>BJP</b></td><td>MP, Raj, UP, Guj, Har, CG, Odi, Delhi, etc.</td><td style="text-align:right;font-weight:700;color:#935116">11-14%</td><td style="text-align:right">₹8,600 Cr avg</td><td><span style="color:#935116;font-weight:700">↑ Moderate increase, matching rivals</span></td><td>Ladli Behna / Ladki Bahin pattern; in Delhi, largely retained AAP's existing subsidies after Feb 2025</td></tr>
 <tr><td><b>Regional (DMK, TMC, JMM, etc.)</b></td><td>TN, WB, Jharkhand, Sikkim, etc.</td><td style="text-align:right;font-weight:700;color:#935116">13%</td><td style="text-align:right">₹9,200 Cr avg</td><td><span style="color:#935116;font-weight:700">↑ Steady rise each term</span></td><td>State-specific identity-based freebies</td></tr>
 </tbody>
 </table>
 </div>
 
 <div style="padding:0 20px 16px;">
+<div class="sbox" style="font-size:12px;margin:0 0 8px;"><b>Correction:</b> AAP lost power in Delhi in the February 2025 Assembly election; BJP's Rekha Gupta became Chief Minister, ending 27 years without a BJP government there. AAP now governs Punjab only. The figures above predate that change and have not yet been recomputed on a Punjab-only basis, so treat the 19%/₹14,850 Cr AAP row as provisional until we can re-source it; Delhi's own current numbers (BJP, 14% of budget) are in the state-by-state tracker above.</div>
 <div class="sbox" style="font-size:12px;margin:0;">
-  <b>Key finding:</b> AAP governs with highest freebie % of budget (avg 19%), followed by Congress (17%), regional parties (13%) and BJP (11%). However BJP states show the fastest pre-election surge pattern, MP jumped from 7% to 11% in election year 2023. Karnataka under Congress jumped from 8% to 22%, highest in India. Punjab under AAP carries the most dangerous debt trajectory at 47% of GSDP. Finance Commission 16 is reviewing whether freebie spending should count against FRBM limits.
+  <b>Key finding:</b> Even accounting for Delhi's change of government, high-welfare-spend states cluster around a similar range regardless of party, Congress-run states currently show the highest average (17%), with BJP and regional-party states somewhat lower. Karnataka under Congress jumped from 8% to 22% of budget, the highest in India. Punjab under AAP carries the most dangerous debt trajectory at 47% of GSDP. The 16th Finance Commission is reviewing whether freebie spending should count against FRBM limits.
 </div>
 </div>
 
@@ -3033,71 +3231,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="pane" id="pane-more">
 
 
-<!-- ══ MEDIA ACCOUNTABILITY: ANJANA OM KASHYAP VS KHAN SIR ══ -->
-<div class="slabel" style="background:var(--accent);letter-spacing:2px;font-size:12px;margin-top:16px">🔴 BREAKING · MEDIA VS ACCOUNTABILITY · JUNE 2026</div>
-
-<div class="card live-card" style="margin:12px 16px;border-left:4px solid var(--accent);">
-  <div class="cdate"><span class="latest">LATEST</span> 8 JUNE 2026 &nbsp;·&nbsp; DELHI HIGH COURT</div>
-  <div class="hl">Aaj Tak anchor files ₹2 crore defamation suit against Khan Sir &amp; 7 others after NEET debate, court seeks response</div>
-  <div class="meta">
-    <span class="ct">Media Accountability</span>
-    <span>Anjana Om Kashyap &amp; TV Today Network v. Faisal Khan &amp; Ors</span>
-  </div>
-
-  <div class="sbox blue" style="margin:10px 0 8px;">
-    <b>What happened, in order</b>
-    <ul class="buls" style="margin-top:8px">
-      <li><b>May 3, 2026:</b> NEET-UG conducted for 22.7 lakh students. Cancelled May 12 after paper leak confirmed, physics questions recalled from memory by NTA-appointed examiner, circulated over WhatsApp.</li>
-      <li><b>May 29, 2026:</b> Aaj Tak managing editor Anjana Om Kashyap hosts prime-time debate on NEET. Calls YouTube educators "frauds" and "do kaudi ke" (worthless), accuses them of chasing views over quality, questions their authority to comment on exam policy.</li>
-      <li><b>May 30, June 4, 2026:</b> Khan Sir (Faisal Khan, 23M+ subscribers, Patna), Abhinay Sharma (Abhinay Maths), Babita Tyagi (ICS Coaching), Arvind Bhadauriya (Naiya Paar Education) and others respond publicly, calling Kashyap "bikau patrakar" (sold-out journalist), "chatukar" (sycophant), "dalali" (broker) and "fake news ki dukaan."</li>
-      <li><b>June 2026:</b> Anjana Om Kashyap and TV Today Network file ₹2 crore civil defamation suit in Delhi High Court. Also named: 4PM News Network, several X handles. Seeks removal of all content from YouTube, Meta and X; injunction against further posts; ₹2 crore damages.</li>
-      <li><b>June 8, 2026:</b> Delhi HC vacation bench (Justice Neena Bansal Krishna) declines interim order, seeks response from defendants. Next hearing listed.</li>
-    </ul>
-  </div>
-
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0;" class="stat-grid-4">
-    <div class="tcard" style="text-align:center;padding:12px 8px;">
-      <div style="font-family:'Lora',serif;font-size:22px;font-weight:900;color:var(--accent)">₹2 Cr</div>
-      <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px">Damages sought</div>
-    </div>
-    <div class="tcard" style="text-align:center;padding:12px 8px;">
-      <div style="font-family:'Lora',serif;font-size:22px;font-weight:900;color:#1a5276">8</div>
-      <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px">Defendants named</div>
-    </div>
-    <div class="tcard" style="text-align:center;padding:12px 8px;">
-      <div style="font-family:'Lora',serif;font-size:22px;font-weight:900;color:#166534">23M+</div>
-      <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px">Khan Sir subscribers</div>
-    </div>
-    <div class="tcard" style="text-align:center;padding:12px 8px;">
-      <div style="font-family:'Lora',serif;font-size:22px;font-weight:900;color:#8b4500">13</div>
-      <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px">NEET leak arrests (CBI)</div>
-    </div>
-  </div>
-
-  <div class="sbox" style="border-left-color:var(--accent);background:#fef2f2;margin:8px 0;">
-    <b>The accountability gap IndiaWatch is tracking</b><br>
- NEET-UG 2026 was cancelled after a physics paper was leaked by an NTA-appointed examiner. Around 22.7 lakh students had to sit a re-examination. CBI has made 13 arrests, but as of this update we have not found evidence that any NTA leadership has faced formal action. The anchor who chose to debate the credibility of YouTube teachers rather than the NTA&#8217;s institutional failure is now suing the educators who pointed that out. The one resignation the protests did produce was political rather than institutional: Education Minister Dharmendra Pradhan stepped down on 25 July 2026, replaced by Pralhad Joshi. Whether NTA's own leadership is ever held to account remains an open question, and one this tracker will keep following.
- </div>
-
-  <div class="sbox green" style="margin:8px 0;">
-    <b>What the defendants actually do</b>
-    <ul class="buls" style="margin-top:6px">
-      <li><b>Khan Sir (Faisal Khan):</b> Patna-based educator. Teaches government exam prep to students from Bihar and UP who cannot afford Kota coaching. Free classes on YouTube. 23M+ subscribers. Known for explaining polity and current affairs in Bhojpuri-inflected Hindi accessible to first-generation learners.</li>
-      <li><b>Abhinay Sharma (Abhinay Maths):</b> SSC/banking exam educator. Lakhs of students credit him for cracking competitive exams without paid coaching.</li>
-      <li><b>Babita Tyagi (ICS Coaching):</b> Runs free and affordable content for UPSC/state PSC aspirants.</li>
-      <li><b>Suman Mam (Ocean Gurukul):</b> Runs free marathon classes for students who cannot afford any institute.</li>
-    </ul>
-  </div>
-
-  <div class="srcs">
-    <a class="src" href="https://www.livelaw.in" target="_blank" rel="noopener">LiveLaw</a>
-    <a class="src" href="https://scroll.in/latest/1093412/aaj-tak-anchor-anjana-om-kashyap-files-defamation-suit-against-bihar-educator-youtuber-khan-sir" target="_blank" rel="noopener">Scroll.in</a>
-    <a class="src" href="https://www.barandbench.com/news/anjana-om-kashyap-files-2-crore-defamation-case-in-delhi-high-court-against-khan-sir-4pm-news" target="_blank" rel="noopener">Bar &amp; Bench</a>
-    <a class="src" href="https://www.siasat.com/hc-seeks-khan-sirs-stand-on-plea-by-journo-anjana-om-kashyap-3485325/" target="_blank" rel="noopener">PTI / Siasat</a>
-    <a class="src" href="https://indialegallive.com/cause-list/neet-star-teacher-controversy-journalist-anjana-om-kashyap-moves-delhi-high-court-against-khan-sir-over-derogatory-remarks/" target="_blank" rel="noopener">India Legal</a>
-  </div>
-</div>
-
 <!-- ══ JUDGES ACCOUNTABILITY: CORRUPTION CHARGES ══ -->
 <div class="slabel" style="background:var(--dark);letter-spacing:2px;font-size:12px;margin-top:16px">⚖ JUDGES ACCOUNTABILITY · CORRUPTION CHARGES · ELEVATION BLOCKED · REWARDED</div>
 
@@ -3105,7 +3238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .ja-subtab-bar{display:flex;background:var(--card-bg);border-bottom:2px solid var(--border);overflow-x:auto;scrollbar-width:none;margin:0}
 .ja-subtab-bar::-webkit-scrollbar{display:none}
 .ja-stab{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;padding:9px 14px;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
-.ja-stab.on{color:var(--accent);border-bottom-color:var(--accent);background:rgba(181,24,28,0.05);font-weight:800}
+.ja-stab.on{color:var(--accent);border-bottom-color:var(--accent);background:rgba(149,72,63,0.05);font-weight:800}
 .ja-stab:hover:not(.on){color:var(--ink);background:var(--paper)}
 .ja-spane{display:none}.ja-spane.on{display:block}
 .ja-tbl{width:100%;border-collapse:collapse;font-family:'Source Sans 3',sans-serif;font-size:12px}
@@ -3139,10 +3272,10 @@ document.addEventListener('DOMContentLoaded', () => {
   </tr></thead><tbody>
   <tr style="border-left:3px solid var(--accent)">
     <td><div class="ja-name">Justice Yashwant Varma</div><div style="font-family:'Source Sans 3',sans-serif;font-size:9px;color:#fff;background:#2c6e9e;display:inline-block;padding:1px 6px;border-radius:2px;margin-top:3px">⚖ JUDGE</div></td>
-    <td style="font-size:11px;color:var(--muted)">Judge, Allahabad HC<br><small>(Fmr Delhi HC judge)</small></td>
-    <td style="font-size:11px;line-height:1.5">Unaccounted cash (alleged ₹15 Cr+) discovered at official bungalow during fire, Mar 2025. SC constituted 3-judge in-house inquiry committee. Transferred from Delhi HC. Remains on bench pending inquiry conclusion. Bar Council demanded impeachment.</td>
+    <td style="font-size:11px;color:var(--muted)">Fmr Judge, Allahabad HC<br><small>(Fmr Delhi HC judge)</small></td>
+    <td style="font-size:11px;line-height:1.5">Unaccounted cash (alleged ₹15 Cr+) discovered at official bungalow during fire, Mar 2025. SC in-house inquiry committee, set up by then-CJI Sanjiv Khanna, found him guilty and recommended removal. 146+ MPs moved a Lok Sabha impeachment motion in Jul 2025. He resigned on 9 April 2026, before the statutory committee finished its hearings, avoiding a Parliament vote. Lawyers say resignation ends his judicial immunity, opening the door to prosecution. Lok Sabha Speaker Om Birla decided in July 2026 to table the committee's report regardless, an unprecedented test of whether resignation can extinguish a pending impeachment probe.</td>
     <td><span style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;color:var(--accent)">SC In-House Cmte</span></td>
-    <td><span class="st st-inquiry">Inquiry · Still on Bench</span></td>
+    <td><span class="st st-inquiry">Resigned · Report Tabled</span></td>
   </tr>
   <tr style="border-left:3px solid var(--accent)">
     <td><div class="ja-name">Justice (Retd.) Nirmal Yadav</div><div style="font-family:'Source Sans 3',sans-serif;font-size:9px;color:#fff;background:#2c6e9e;display:inline-block;padding:1px 6px;border-radius:2px;margin-top:3px">⚖ JUDGE</div></td>
@@ -3239,7 +3372,6 @@ document.addEventListener('DOMContentLoaded', () => {
   </tr>
   </tbody></table></div>
   <div style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted);padding:8px 20px 4px;border-top:1px solid var(--border);line-height:1.6"><b>Pattern note:</b> The above cases do not individually prove judicial bias. What they document is a structural incentive problem: judges face zero institutional cost for rulings that benefit the ruling party, while those who rule against it face documented career consequences. India has no cooling-off period, no independent audit of RAT roles, and no disclosure requirement for judges' communications with the executive. Sources: SC Collegium resolutions · RTI · Bar &amp; Bench · LiveLaw · SC Observer.</div>
-  <div class="ja-foot"></div>
 </div>
 
 <script>
@@ -3312,24 +3444,40 @@ window.jaTab=function(id,btn){
   <td><b>Justice D.Y. Chandrachud</b><br><small style="color:var(--muted)">Retd. CJI</small></td>
   <td>No formal appointment yet<br><small>Retired Nov 2024</small></td>
   <td style="font-size:12px">Electoral bonds, struck down (landmark) · Demonetisation, upheld 4-1 · Ayodhya, part of bench · Section 377, decriminalised · Article 370, upheld abrogation · Met PM Modi privately (flagged by Bar)</td>
-  <td><span style="color:#935116">Watch, retired Nov 2024</span><br><small>No appointment yet as of Jun 2026</small></td>
+  <td><span style="color:#935116">Watch, retired Nov 2024</span><br><small>No RAT appointment publicly reported as of Sept 2026</small></td>
+  <td><span class="st st-ongoing">Watch</span></td>
+</tr>
+
+<tr>
+  <td><b>Justice Sanjiv Khanna</b><br><small style="color:var(--muted)">Retd. CJI (51st)</small></td>
+  <td><b>Was Chief Justice of India</b><br><small>Nov 2024 to May 2025</small></td>
+  <td style="font-size:12px">Electoral bonds, part of Constitution Bench (struck down) · VVPAT case, dismissed full verification demand · Article 370, upheld abrogation · Delhi CM arrest, granted bail to Kejriwal · As CJI, recommended Justice Varma's removal after the in-house cash-scandal inquiry</td>
+  <td>Retired May 2025<br><small>No RAT appointment publicly reported as of Sept 2026</small></td>
   <td><span class="st st-ongoing">Watch</span></td>
 </tr>
 
 <tr style="background:#fff8f0">
-  <td><b>Justice Sanjiv Khanna</b><br><small style="color:var(--muted)">Current CJI</small></td>
-  <td><b>Chief Justice of India</b><br><small>Since Nov 2024</small></td>
-  <td style="font-size:12px">Electoral bonds, part of Constitution Bench (struck down) · VVPAT case, dismissed full verification demand · Article 370, upheld abrogation · Delhi CM arrest, granted bail to Kejriwal</td>
-  <td>Serving CJI<br><small>Retires May 2025</small></td>
+  <td><b>Justice B.R. Gavai</b><br><small style="color:var(--muted)">Retd. CJI (52nd)</small></td>
+  <td><b>Was Chief Justice of India</b><br><small>May 2025 to Nov 2025, 6 months</small></td>
+  <td style="font-size:12px">First CJI from a Scheduled Caste background in this century; second Dalit CJI after K.G. Balakrishnan</td>
+  <td>Retired Nov 2025<br><small>No RAT appointment publicly reported as of Sept 2026</small></td>
+  <td><span class="st st-ongoing">Watch</span></td>
+</tr>
+
+<tr>
+  <td><b>Justice Surya Kant</b><br><small style="color:var(--muted)">Current CJI (53rd)</small></td>
+  <td><b>Chief Justice of India</b><br><small>Since 24 Nov 2025</small></td>
+  <td style="font-size:12px">Sworn in as India's 53rd CJI; tenure runs to 9 Feb 2027 (~15 months)</td>
+  <td>Serving CJI<br><small>Retires Feb 2027</small></td>
   <td><span class="st st-ongoing">Serving</span></td>
 </tr>
 
 <tr>
-  <td><b>Justice Yashwant Varma</b><br><small style="color:var(--muted)">Judge, Allahabad HC</small></td>
-  <td>Allahabad HC<br><small>Transferred from Delhi HC</small></td>
-  <td style="font-size:12px">Unaccounted cash found at official residence during fire Mar 2025 · SC in-house inquiry ongoing · Transferred out of Delhi HC · Still on bench despite cash scandal</td>
-  <td>Still serving, inquiry pending</td>
-  <td><span class="st st-inquiry">Cash Scandal · Inquiry</span></td>
+  <td><b>Justice Yashwant Varma</b><br><small style="color:var(--muted)">Fmr Judge, Allahabad HC</small></td>
+  <td>Resigned<br><small>Was transferred from Delhi HC</small></td>
+  <td style="font-size:12px">Unaccounted cash found at official residence during fire, 14 Mar 2025 · SC in-house inquiry (under then-CJI Khanna) found him guilty, recommended removal · 146+ MPs moved a Lok Sabha impeachment motion, Jul 2025 · Resigned 9 Apr 2026, before the statutory inquiry committee concluded, avoiding a Parliament vote · Lawyers say resignation ends his judicial immunity, opening the door to prosecution · Lok Sabha Speaker decided in Jul 2026 to table the committee's report anyway, an unprecedented move testing whether resignation can extinguish a pending impeachment probe</td>
+  <td>Resigned Apr 2026<br><small>Report tabled regardless, Jul 2026</small></td>
+  <td><span class="st st-inquiry">Resigned · Report Tabled</span></td>
 </tr>
 
 </tbody>
@@ -4491,25 +4639,22 @@ async function drawOil(){
     v === null ? null : Math.round((v * usdInr[i]) / 158.987 * 10) / 10
   );
 
-  const petrol = [73,71,71,71, 87,91,101,107, 95,110,111,109, 102,102,96,96, 95,95,94,94, 94,94,97,99, 101,103,102];
+  const petrol = [73,71,71,71, 87,91,101,107, 95,110,111,109, 102,102,96,96, 95,95,94,94, 94,94,97,99, 101,103,102.12];
 
-  const liveBrent = await fetchLiveBrent();
-  const liveInr = (await fetchUsdInr()) || 95.0; // live USD/INR
-
-  brentUSD[brentUSD.length - 1] = liveBrent;
-  brentInrPerLitre[brentInrPerLitre.length - 1] = Math.round((liveBrent * liveInr) / 158.987 * 10) / 10;
-  petrol[petrol.length - 1] = 102.12;
-
+  // Render immediately with the historical/static data above — no network call blocks first paint.
+  // Live figures (crude price, USD/INR) patch in a few seconds later, in the background, once fetched.
   const bannerUsd = document.getElementById('banner-usd');
   const bannerBrent = document.getElementById('banner-brent');
-  if (bannerUsd) bannerUsd.textContent = liveInr.toFixed(1);
-  if (bannerBrent) bannerBrent.textContent = liveBrent.toFixed(1);
+  if (bannerUsd) bannerUsd.textContent = usdInr[usdInr.length-1].toFixed(1);
+  if (bannerBrent) bannerBrent.textContent = brentUSD[brentUSD.length-1].toFixed(1);
 
-  document.getElementById('live-brent').textContent = `$${liveBrent} = ₹${brentInrPerLitre[brentInrPerLitre.length-1]}/L`;
-  document.getElementById('live-brent-sub').textContent = `Crude cost at refinery gate`;
-  document.getElementById('oil-live-badge').innerHTML =
-    `<span style="display:inline-block;width:7px;height:7px;background:#1a6b2e;border-radius:50%;margin-right:4px;"></span>` +
-    `Live · Updated ${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}`;
+  const liveBrentEl = document.getElementById('live-brent');
+  const liveBrentSubEl = document.getElementById('live-brent-sub');
+  const oilLiveBadgeEl = document.getElementById('oil-live-badge');
+  if (liveBrentEl) liveBrentEl.textContent = `$${brentUSD[brentUSD.length-1]} ≈ ₹${brentInrPerLitre[brentInrPerLitre.length-1]}/L`;
+  if (liveBrentSubEl) liveBrentSubEl.textContent = `Crude cost at refinery gate`;
+  if (oilLiveBadgeEl) oilLiveBadgeEl.innerHTML =
+    `<span style="display:inline-block;width:7px;height:7px;background:var(--muted);border-radius:50%;margin-right:4px;"></span>Fetching live price…`;
 
   oilChart = new Chart(document.getElementById('oilc'),{
     type:'line',
@@ -4528,7 +4673,7 @@ async function drawOil(){
         label:'Delhi Petrol Retail Price (₹/L)',
         data:petrol,
         borderColor:'#95483f',
-        backgroundColor:'rgba(181,24,28,0.07)',
+        backgroundColor:'rgba(149,72,63,0.07)',
         tension:.4,
         pointBackgroundColor: petrol.map((_,i)=> i===petrol.length-1 ? '#95483f' : 'transparent'),
         pointRadius: petrol.map((_,i)=> i===petrol.length-1 ? 6 : 2),
@@ -4561,6 +4706,34 @@ async function drawOil(){
   });
 
   drawBreakdown(brentInrPerLitre, petrol, labels);
+
+  // Now fetch live crude price & USD/INR in the background and patch just the last
+  // data point once available — the chart itself never waits on this.
+  (async () => {
+    try {
+      const liveBrent = await fetchLiveBrent();
+      const liveInr = (await fetchUsdInr()) || usdInr[usdInr.length-1];
+      const liveBrentInrPerLitre = Math.round((liveBrent * liveInr) / 158.987 * 10) / 10;
+
+      if (bannerUsd) bannerUsd.textContent = liveInr.toFixed(1);
+      if (bannerBrent) bannerBrent.textContent = liveBrent.toFixed(1);
+      if (liveBrentEl) liveBrentEl.textContent = `$${liveBrent} = ₹${liveBrentInrPerLitre}/L`;
+      if (liveBrentSubEl) liveBrentSubEl.textContent = `Crude cost at refinery gate`;
+      if (oilLiveBadgeEl) oilLiveBadgeEl.innerHTML =
+        `<span style="display:inline-block;width:7px;height:7px;background:#1a6b2e;border-radius:50%;margin-right:4px;"></span>` +
+        `Live · Updated ${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}`;
+
+      if (oilChart) {
+        brentInrPerLitre[brentInrPerLitre.length-1] = liveBrentInrPerLitre;
+        oilChart.data.datasets[0].data = brentInrPerLitre;
+        oilChart.update('none');
+      }
+      drawBreakdown(brentInrPerLitre, petrol, labels); // recompute the tax breakdown with the live crude figure
+    } catch(e) {
+      if (oilLiveBadgeEl) oilLiveBadgeEl.innerHTML =
+        `<span style="display:inline-block;width:7px;height:7px;background:var(--muted);border-radius:50%;margin-right:4px;"></span>Using last known price (live fetch unavailable)`;
+    }
+  })();
 }
 
 function drawBreakdown(brentInrPerLitre, petrol, labels) {
@@ -4624,7 +4797,7 @@ function drawBreakdown(brentInrPerLitre, petrol, labels) {
       {
         label: 'Central Excise Duty (₹/L)',
         data: exciseArr,
-        backgroundColor: 'rgba(181,24,28,0.85)',
+        backgroundColor: 'rgba(149,72,63,0.85)',
         stack: 's'
       },
       {
@@ -4667,31 +4840,6 @@ function drawBreakdown(brentInrPerLitre, petrol, labels) {
   });
 }
 
-function drawInr(){
-  if(inrDone)return; inrDone=true;
-  const labels=['Jan\'20','Jul\'20','Jan\'21','Jul\'21','Jan\'22','Jul\'22','Jan\'23','Jul\'23','Jan\'24','Jul\'24','Jan\'25','Jul\'25','Jan\'26','May\'26'];
-  new Chart(document.getElementById('inrc'),{
-    type:'line',
-    data:{labels,datasets:[
-      {label:'USD (÷10 for scale)',data:[7.13,7.48,7.30,7.45,7.46,7.96,8.18,8.23,8.31,8.38,8.60,8.50,8.55,8.56],borderColor:'#0a4a7a',backgroundColor:'rgba(10,74,122,0.06)',tension:.4,pointRadius:3},
-      {label:'EUR (÷10 for scale)',data:[7.90,8.88,8.84,8.78,8.43,8.08,8.87,8.92,9.07,9.17,9.40,9.25,9.30,9.32],borderColor:'#6b0a6b',backgroundColor:'rgba(107,10,107,0.06)',tension:.4,pointRadius:3},
-      {label:'GBP (÷10 for scale)',data:[9.17,9.69,10.07,10.24,10.05,9.49,10.40,10.53,10.60,10.65,10.74,10.78,10.85,10.89],borderColor:'#7a3b32',backgroundColor:'rgba(139,0,0,0.06)',tension:.4,pointRadius:3},
-      {label:'JPY (×10 for scale)',data:[6.47,7.00,7.12,6.75,6.51,5.56,5.80,5.23,5.24,4.83,5.60,5.70,5.78,5.82],borderColor:'#1a6b2e',backgroundColor:'rgba(26,107,46,0.06)',tension:.4,pointRadius:3,borderDash:[5,3]},
-      {label:'AED (×3 for scale)',data:[6.10,6.39,6.41,6.42,6.41,6.41,6.43,6.44,6.45,6.72,6.85,6.90,6.95,6.99],borderColor:'#8b4500',backgroundColor:'rgba(139,69,0,0.06)',tension:.4,pointRadius:3,borderDash:[3,2]}
-    ]},
-    options:{responsive:true,interaction:{mode:'index',intersect:false},
-      plugins:{
-        legend:{position:'top',labels:{font:{family:'Source Sans 3',size:11},boxWidth:12}},
-        tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y} (scaled)`}}
-      },
-      scales:{
-        y:{title:{display:true,text:'₹ per currency unit (scaled for display)',font:{size:10}},ticks:{font:{family:'Source Sans 3',size:10}},grid:{color:'#e8e0d0'}},
-        x:{ticks:{font:{family:'Source Sans 3',size:9},maxRotation:45},grid:{color:'#e8e0d0'}}
-      }
-    }
-  });
-}
-
 function drawTaxGDP(){
   if(taxDone)return; taxDone=true;
   const el = document.getElementById('taxgdpc');
@@ -4702,8 +4850,8 @@ function drawTaxGDP(){
   new Chart(el,{
     type:'bar',
     data:{labels:years,datasets:[
-      {label:'Direct tax / GDP (%)',data:[5.62,5.97,6.7,7.0],backgroundColor:'rgba(181,24,28,0.8)'},
-      {label:'Overall tax / GDP (%)',data:[null,null,11.1,11.7],backgroundColor:'rgba(10,74,122,0.7)'}
+      {label:'Direct tax / GDP (%)',data:[5.62,5.97,6.7,7.0],backgroundColor:'rgba(149,72,63,0.85)'},
+      {label:'Overall tax / GDP (%)',data:[null,null,11.1,11.7],backgroundColor:'rgba(26,82,118,0.7)'}
     ]},
     options:{responsive:true,
       maintainAspectRatio:false,
@@ -4715,6 +4863,19 @@ function drawTaxGDP(){
     }
   });
 }
+
+// The Money Watch tab is the one shown by default on page load, but drawOil()/drawTaxGDP()
+// were only ever triggered by clicking a nav button (see sw() above). Since no click fires
+// automatically on load, the charts stayed blank until a user clicked away and back.
+// This fires them once, directly, as soon as the page and Chart.js are ready.
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    waitForChart(function(){
+      if(!oilDone) drawOil();
+      if(!taxDone) drawTaxGDP();
+    });
+  }, 400);
+});
 
 function injectCardShares() {
   const cards = Array.from(document.querySelectorAll('.card'));
