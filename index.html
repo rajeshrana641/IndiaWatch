@@ -954,16 +954,24 @@ p, .sbox, .card p{max-width:62ch}
 <script>
 (function(){
   function addReadMore(){
-    var nodes = document.querySelectorAll('p, .sbox');
+    // Only plain paragraphs get clamped. .sbox is deliberately excluded:
+    // 89% of .sbox elements site-wide are short "bold-label + payoff" callouts (Sources,
+    // Key finding, Why X happens, What the data shows, etc.) by house convention — these
+    // are already the condensed takeaway, not a long story, so clamping them just hides
+    // the answer behind an extra click. Repeatedly special-casing individual boxes was
+    // fragile; excluding the class entirely fixes it at the root.
+    var nodes = document.querySelectorAll('p');
     for (var i=0;i<nodes.length;i++){
       var el = nodes[i];
       if (el.dataset.rmDone) continue;
       el.dataset.rmDone = '1';
-      if (el.closest('.iw-clamp') || el.closest('.ctable') || el.closest('table')) continue;
+      if (el.closest('.iw-clamp') || el.closest('.ctable') || el.closest('table') || el.closest('.sbox')) continue;
       // "Current status" style callouts (5px accent border) are short, load-bearing summaries —
       // always show them in full rather than hiding the key fact behind a click.
       if (el.closest('[style*="border-left:5px"]')) continue;
       var txt = (el.textContent||'').trim();
+      // Defensive: skip any paragraph that itself opens with a label-style lead-in.
+      if (/^(Sources:|How this is built:|Correction:|Key finding:|Pattern note:|Bottom Line:|For balance|The honest picture:|The other side:)/.test(txt)) continue;
       if (txt.length < 480) continue;
       el.classList.add('iw-clamp');
       var btn = document.createElement('span');
