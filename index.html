@@ -926,7 +926,7 @@ footer a:hover{color:#7a0e10}
 /* ── QUICK-READ MODE — every story skims in under a minute; tap to expand ── */
 body{font-size:14.5px;line-height:1.7}
 .hl{line-height:1.4}
-p, .sbox, .card p{max-width:62ch}
+.col-main p, .col-main .sbox, .card p{max-width:62ch}
 .iw-clamp{
   display:-webkit-box;
   -webkit-line-clamp:5;
@@ -950,6 +950,12 @@ p, .sbox, .card p{max-width:62ch}
   user-select:none;
 }
 .iw-readmore:hover{text-decoration:underline}
+/* Fix: .nav is a full-width block-level flex container, but its tabs are
+   left-aligned by default, leaving a large empty gap on wide screens.
+   Center the tabs on desktop only; mobile keeps its column dropdown. */
+@media(min-width:581px){
+  .nav{justify-content:center}
+}
 </style>
 <script>
 (function(){
@@ -1358,7 +1364,6 @@ p, .sbox, .card p{max-width:62ch}
 <!-- ═══ SECTION 4: 10-YEAR TREND ═══ -->
 <div class="slabel" style="margin-top:4px;">📈 10-Year Trend: Up, Not Down</div>
 <div class="carea" style="padding-top:0">
-  <div style="position:relative;height:210px;width:100%"><canvas id="taxgdpc" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas></div>
   <div class="sbox" style="margin-top:8px;">
     Verified years only, no interpolation:<br>
     &#9658; <b>Direct tax/GDP:</b> 5.62% (FY14) → 5.97% (FY22) → ~7.0% (FY25 est.)<br>
@@ -1370,24 +1375,38 @@ p, .sbox, .card p{max-width:62ch}
 </div>
 
 <!-- ═══ SECTION 5: NEW TAXES TIMELINE ═══ -->
-<div class="slabel" style="margin-top:4px;">🕰 New Taxes Since 2014</div>
+<div class="slabel" style="margin-top:4px;">🕰 Every New Tax, Cess &amp; Levy Since 2015 — and Who It Hits</div>
+<div style="padding:6px 20px 4px;">
+  <p style="font-family:'Source Serif 4',serif;font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:4px;max-width:none;">
+    A decade of Finance Bills, one row each. Covers income tax, cesses, GST, capital-markets levies, TDS/TCS and digital charges — the wins for the middle class as well as the hits, so you can see the net direction for yourself.
+  </p>
+</div>
 <div class="ctable-outer" style="margin:8px 20px 10px;">
 <table class="ctable">
-<thead><tr><th>Year</th><th>Change</th><th></th></tr></thead>
+<thead><tr><th>Year</th><th>Tax / Levy</th><th>What changed</th><th>Hits the middle class as</th><th></th></tr></thead>
 <tbody>
-<tr><td><b>2015</b></td><td>Swachh Bharat + Krishi Kalyan cess added</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
-<tr style="background:var(--paper)"><td><b>2017</b></td><td>GST replaces old excise/service tax/VAT patchwork</td><td><span style="color:var(--muted);font-weight:700">↔</span></td></tr>
-<tr><td><b>2018</b></td><td>LTCG on equity reintroduced at 10%; cess raised to 4%</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
-<tr style="background:var(--paper)"><td><b>2020</b></td><td>UPI MDR zero-rated, but fuel excise hiked ~₹13/L</td><td><span style="color:var(--muted);font-weight:700">↕</span></td></tr>
-<tr><td><b>2023</b></td><td>Foreign remittance TCS raised to 20%</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
-<tr style="background:var(--paper)"><td><b>2024</b></td><td>LTCG 10%→12.5%, STCG 15%→20%, STT on F&amp;O hiked</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
-<tr><td><b>2025</b></td><td>New-regime rebate to ₹12L; GST 2.0 rationalisation</td><td><span style="color:#166534;font-weight:700">↓</span></td></tr>
-<tr style="background:#fff3e0"><td><b>2026</b></td><td>UPI MDR of 0.4% reintroduced above ₹2,000</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="border-left:3px solid #8b4500"><td><b>2015</b></td><td>Swachh Bharat Cess</td><td>0.5% added on (almost) all taxable services, service tax effectively 14%→14.5%</td><td>A little more on every phone bill, restaurant tab, salon visit</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid #8b4500"><td><b>2016</b></td><td>Krishi Kalyan Cess</td><td>Another 0.5% on services, taking the effective rate to 15%</td><td>Stacked on top of Swachh Bharat, same everyday bills</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="border-left:3px solid #8b4500"><td><b>2016</b></td><td>Infrastructure Cess</td><td>1-4% added on new car purchases, by engine/body type</td><td>Anyone buying a new car pays more upfront</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid #6b0a6b"><td><b>2017</b></td><td>GST launch</td><td>Replaces excise, VAT, service tax &amp; assorted cesses with one tax; standard services rate lands at 18%, up from ~15%</td><td>Simpler paperwork, but many everyday services got costlier</td><td><span style="color:var(--muted);font-weight:700">↕</span></td></tr>
+<tr style="border-left:3px solid var(--accent)"><td><b>2018</b></td><td>Health &amp; Education Cess</td><td>Raised from 3% to 4% of income tax payable, replacing the old cess</td><td>Extra cess on every salaried taxpayer's bill, every year since</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid #1a5276"><td><b>2018</b></td><td>LTCG on equity</td><td>10% tax reintroduced on stock/equity-fund gains above ₹1L/year, no indexation</td><td>Hits mutual-fund SIP and stock investors directly</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="border-left:3px solid #6b0a6b"><td><b>2018</b></td><td>GST on insurance premiums</td><td>18% GST applied on life &amp; health insurance premiums (in force since 2017, widely felt from here)</td><td>Insurance became a visibly taxed expense, not a tax-free necessity</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid var(--muted)"><td><b>2019</b></td><td>TDS on cash withdrawal</td><td>2% TDS on cash withdrawals above ₹1 Cr/year from a bank account (later slabs widened)</td><td>Mostly businesses and heavy cash users, limited direct middle-class hit</td><td><span style="color:var(--muted);font-weight:700">↕</span></td></tr>
+<tr style="border-left:3px solid #1a5276"><td><b>2020</b></td><td>Dividend Distribution Tax abolished</td><td>Companies stop paying DDT; dividends now taxed in the investor's hands at slab rate</td><td>Relief for small investors in a low slab, extra burden for those in 20-30% slabs</td><td><span style="color:var(--muted);font-weight:700">↕</span></td></tr>
+<tr style="background:#fff3e0;border-left:3px solid #8b4500"><td><b>2020</b></td><td>Fuel excise duty</td><td>Hiked ~₹13/L on petrol and ~₹16/L on diesel amid the pandemic; never fully rolled back</td><td>Direct hit on every commute, cab ride and delivery charge since</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="border-left:3px solid var(--accent)"><td><b>2021</b></td><td>EPF/VPF interest tax</td><td>Interest on employee PF contributions above ₹2.5L/year (₹5L for govt staff) made taxable</td><td>Higher earners and voluntary-PF savers lose a tax-free retirement cushion</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid #1a5276"><td><b>2022</b></td><td>Crypto / VDA tax</td><td>Flat 30% tax + 4% cess on crypto/NFT gains, plus 1% TCS on transfers; losses can't offset other income</td><td>Falls on young, first-time retail investors in digital assets</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="border-left:3px solid var(--muted)"><td><b>2023</b></td><td>Foreign remittance/travel TCS</td><td>TCS on foreign remittances &amp; travel packages raised to 20% above ₹7L/year (education/medical stay lower)</td><td>Families funding foreign education, travel or remittances feel a cash-flow hit (adjustable against final tax)</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid #1a5276"><td><b>2024</b></td><td>Capital-gains &amp; STT hike</td><td>LTCG 10%→12.5%, STCG 15%→20% on equity; STT on F&amp;O trades raised sharply</td><td>Every SIP investor and stock-market trader pays more on gains</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
+<tr style="border-left:3px solid var(--green)"><td><b>2025</b></td><td>New-regime rebate</td><td>Income up to ₹12L/year made effectively tax-free under the new regime</td><td>Direct, meaningful relief for salaried middle-class filers</td><td><span style="color:#166534;font-weight:700">↓</span></td></tr>
+<tr style="background:var(--paper);border-left:3px solid var(--green)"><td><b>2025</b></td><td>GST 2.0 &amp; insurance exemption</td><td>Rate slabs rationalised; GST on individual life &amp; health insurance premiums cut from 18% to 0%</td><td>Cheaper insurance and several everyday goods, after 8 years of paying GST on both</td><td><span style="color:#166534;font-weight:700">↓</span></td></tr>
+<tr style="border-left:3px solid #8b4500"><td><b>2026</b></td><td>UPI merchant MDR</td><td>0.4% MDR reintroduced on UPI payments above ₹2,000; billed to merchants, not shoppers, by rule</td><td>Merchants may pass some of this through in prices over time</td><td><span style="color:#7a3b32;font-weight:700">↑</span></td></tr>
 </tbody>
 </table>
 </div>
 <div style="padding:0 20px;">
-  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> Zerodha, Deloitte India, Lok Sabha Q.3645 (2025), Union Budgets, NPCI.</div>
+  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> Union Budget speeches &amp; Finance Acts, 2015-2026 (PIB) · GST Council press releases · CBDT circulars · ClearTax &amp; Zerodha Varsity explainers · Business Standard, Livemint &amp; Reuters coverage · Lok Sabha Q.3645 (2025) · NPCI.</div>
 </div>
 
 <!-- ═══ SECTION 6: UPI CHARGE VS TOTAL TAX ═══ -->
@@ -4528,7 +4547,7 @@ function sw(name,btn){
   if(window.scrollY > 100) window.scrollTo({top:0,behavior:'smooth'});
 
   if(RSS_FEEDS[name]) loadTabNews(name);
-  if(name==='money'){ if(!oilDone) drawOil(); if(!taxDone) drawTaxGDP(); }
+  if(name==='money'){ if(!oilDone) drawOil(); }
   if(window.iwAddReadMore) setTimeout(window.iwAddReadMore, 200);
 }
 
@@ -4848,39 +4867,14 @@ function drawBreakdown(brentInrPerLitre, petrol, labels) {
   });
 }
 
-function drawTaxGDP(){
-  if(taxDone)return; taxDone=true;
-  const el = document.getElementById('taxgdpc');
-  if(!el) return;
-  // Verified anchor years only — CBDT time-series data, Budget documents & Economic Survey.
-  // Gaps are years we could not find a published figure for; the chart is intentionally sparse.
-  const years=['FY2013-14','FY2021-22','FY2023-24','FY2024-25(est.)'];
-  new Chart(el,{
-    type:'bar',
-    data:{labels:years,datasets:[
-      {label:'Direct tax / GDP (%)',data:[5.62,5.97,6.7,7.0],backgroundColor:'rgba(149,72,63,0.85)'},
-      {label:'Overall tax / GDP (%)',data:[null,null,11.1,11.7],backgroundColor:'rgba(26,82,118,0.7)'}
-    ]},
-    options:{responsive:true,
-      maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10,padding:8,usePointStyle:true}}},
-      scales:{
-        x:{ticks:{font:{size:10},maxRotation:0},grid:{display:false},border:{display:false}},
-        y:{ticks:{font:{size:10},maxTicksLimit:6,callback:v=>v+'%'},grid:{color:'rgba(100,130,160,0.1)'},border:{display:false}}
-      }
-    }
-  });
-}
-
-// The Money Watch tab is the one shown by default on page load, but drawOil()/drawTaxGDP()
-// were only ever triggered by clicking a nav button (see sw() above). Since no click fires
-// automatically on load, the charts stayed blank until a user clicked away and back.
-// This fires them once, directly, as soon as the page and Chart.js are ready.
+// The Money Watch tab is the one shown by default on page load, but drawOil()
+// was only ever triggered by clicking a nav button (see sw() above). Since no click fires
+// automatically on load, the chart stayed blank until a user clicked away and back.
+// This fires it once, directly, as soon as the page and Chart.js are ready.
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     waitForChart(function(){
       if(!oilDone) drawOil();
-      if(!taxDone) drawTaxGDP();
     });
   }, 400);
 });
