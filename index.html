@@ -1324,6 +1324,7 @@ body{font-size:14.5px;line-height:1.7}
         <div class="tcard" style="border-top-color:${monthlySavings>=0?'#166534':'#95483f'}"><div class="tclabel">Savings left over</div><div class="tcval" style="font-size:17px;color:${monthlySavings>=0?'#166534':'#95483f'}">${fmt(monthlySavings)}/mo</div><div class="tcsub">${fmt(annualSavings)}/year</div></div>
       </div>
       <div class="sbox" style="margin-top:4px;"><b>Effective total tax burden (visible + hidden): ${effectiveRate.toFixed(1)}% of gross income.</b> That's ${fmt(t.total)} in income tax plus an estimated ${fmt(totalHiddenTax*12)} a year in embedded indirect tax across the spending above.</div>
+      <div style="margin-top:8px;">${(typeof xShareBtn==='function') ? xShareBtn('My real tax burden in India (visible + hidden): '+effectiveRate.toFixed(1)+'% of gross income — '+fmt(t.total)+' in income tax + an estimated '+fmt(totalHiddenTax*12)+'/year hidden in everyday spending. See your own number:', 'https://indiawatch.net/#money') : ''}</div>
     `;
   };
 
@@ -1406,7 +1407,16 @@ body{font-size:14.5px;line-height:1.7}
 </table>
 </div>
 <div style="padding:0 20px;">
-  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> Union Budget speeches &amp; Finance Acts, 2015-2026 (PIB) · GST Council press releases · CBDT circulars · ClearTax &amp; Zerodha Varsity explainers · Business Standard, Livemint &amp; Reuters coverage · Lok Sabha Q.3645 (2025) · NPCI.</div>
+  <div class="sbox" style="margin-bottom:8px;"><b>Sources:</b> Union Budget speeches &amp; Finance Acts, 2015-2026 (PIB) · GST Council press releases · CBDT circulars · ClearTax &amp; Zerodha Varsity explainers · Business Standard, Livemint &amp; Reuters coverage · Lok Sabha Q.3645 (2025) · NPCI.</div>
+  <div style="margin-bottom:16px;" id="taxes-table-share"></div>
+  <script>
+    window.addEventListener('load', function(){
+      var el = document.getElementById('taxes-table-share');
+      if (el && typeof xShareBtn === 'function') {
+        el.innerHTML = xShareBtn('16 taxes, cesses & levies India has added, hiked, or cut in the last decade — one table, both the hits and the relief:', 'https://indiawatch.net/#money');
+      }
+    });
+  </script>
 </div>
 
 <!-- ═══ SECTION 6: UPI CHARGE VS TOTAL TAX ═══ -->
