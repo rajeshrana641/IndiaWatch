@@ -19,13 +19,13 @@
   }
 })();
 </script>
-<!-- REBUILT 2026-06-01 OPTIMISED v9 -->
+<!-- REBUILT 2026-06-01 OPTIMISED v9 · CONTENT + MOBILE NAV UPDATED 2026-10-03 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- PRIMARY SEO META                                        -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<title>IndiaWatch, India Accountability, Court Judgements & Corruption Tracker · Sept 2026 · CEC Gyanesh Kumar Row</title>
+<title>IndiaWatch, India Accountability, Court Judgements & Corruption Tracker · Oct 2026 · CEC Gyanesh Kumar Row</title>
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="IndiaWatch tracks India court judgements, corruption, fuel prices & INR rates — plus a Global Watch covering AI, climate, wars, tech, health & economy stories followed worldwide. No ads. No paywall.">
 <meta name="keywords" content="498A judgement 2026, NHAI corruption cases, petrol price vs crude oil India, INR exchange rate today, middle class tax India 2026, India corruption tracker, judiciary accountability India, HC judgements 2026, Supreme Court 498A, India CAG audit 2026, dowry law India latest, fuel price India breakdown, political corruption India 2026, petrol price Delhi today, USD INR rate today">
@@ -35,8 +35,8 @@
 <link rel="sitemap" type="application/xml" href="https://indiawatch.net/sitemap.xml">
 <link rel="alternate" hreflang="en-IN" href="https://indiawatch.net/">
 <link rel="alternate" hreflang="x-default" href="https://indiawatch.net/">
-<meta name="last-modified" id="meta-last-modified" content="2026-09-26">
-<meta http-equiv="last-modified" id="meta-last-modified-http" content="Sat, 26 Sep 2026 00:00:00 IST">
+<meta name="last-modified" id="meta-last-modified" content="2026-10-03">
+<meta http-equiv="last-modified" id="meta-last-modified-http" content="Sat, 03 Oct 2026 00:00:00 IST">
 <!-- Google Search Console — replace YOUR_CODE_HERE with your actual verification code, then uncomment -->
 <!-- <meta name="google-site-verification" content="YOUR_CODE_HERE"> -->
 
@@ -201,14 +201,6 @@ html{background:#f5f3ef}body{background:var(--paper);font-family:'Source Serif 4
 .tbtn{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:13px 16px;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:color .2s,border-color .2s,background .2s;display:flex;align-items:center;gap:5px;border-radius:6px 6px 0 0}
 .tbtn.on{color:var(--red);border-bottom-color:var(--red);background:rgba(192,57,43,0.06)}
 .tbtn:hover:not(.on){color:var(--dark);background:rgba(0,0,0,0.04)}
-/* Mobile hamburger */
-@media(max-width:640px){
-  .nav{display:none;flex-direction:column;padding:0;position:absolute;top:100%;left:0;right:0;background:#fff;border:none;border-bottom:2px solid var(--rule);box-shadow:0 8px 24px rgba(0,0,0,0.15);z-index:300}
-  .nav.open{display:flex}
-  .tbtn{border-bottom:1px solid var(--border)!important;border-radius:0;padding:14px 20px;margin-bottom:0;width:100%;justify-content:flex-start;font-size:14px}
-  .tbtn.on{border-left:4px solid var(--red);border-bottom-color:var(--border)!important;background:rgba(192,57,43,0.06)}
-  .nav-outer{position:sticky;top:0}
-}
 /* Nav scroll indicator */
 .nav-tabs-wrap{position:relative;flex:1;overflow:hidden}
 .nav-tabs-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:24px;background:linear-gradient(to right,transparent,var(--card-bg));pointer-events:none}
@@ -478,13 +470,6 @@ footer a:hover{color:#7a0e10}
 
 /* ══ SECTION LABELS ══ */
 
-/* ══ MOBILE ══ */
-@media(max-width:768px){
-  .nav{display:none;flex-direction:column;padding:0;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:2px solid #a1503f;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:300}
-  .nav.open{display:flex}
-  .tbtn{border-bottom:1px solid #f0ebe0!important;border-radius:0;padding:14px 16px;margin-bottom:0;width:100%;justify-content:flex-start;font-size:14px;min-height:44px}
-  .tbtn.on{border-left:4px solid #a1503f;background:rgba(192,57,43,0.06)}
-}
 /* ── TICKER: definitive fix — must beat deferred JS styles ── */
 .ticker-wrap{
   display:flex!important;
@@ -535,48 +520,6 @@ footer a:hover{color:#7a0e10}
 #search-wrap{display:none!important}
 #search-wrap.open{display:flex!important}
 
-
-/* ── 1. HAMBURGER NAV — fix: show button, anchor dropdown ── */
-@media(max-width:768px){
-  .nav-outer{
-    display:flex!important;
-    flex-direction:row!important;
-    align-items:center!important;
-    position:relative!important;
-    min-height:52px;
-    justify-content:space-between;
-    padding:0 12px;
-  }
-  .nav-hamburger{
-    display:flex!important;
-    align-items:center;
-    justify-content:center;
-    width:44px;
-    height:44px;
-    padding:0;
-    margin:0;
-    cursor:pointer;
-    background:none;
-    border:none;
-    flex-shrink:0;
-  }
-  .nav-hamburger span{
-    display:block;
-    width:24px;
-    height:2px;
-    background:var(--dark);
-    margin:4px 0;
-    transition:all .3s;
-  }
-  .nav-hamburger.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}
-  .nav-hamburger.active span:nth-child(2){opacity:0}
-  .nav-hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-}
-/* ── ADDITIONAL MOBILE CONTROLS ── */
-@media(min-width:769px){
-  .nav-hamburger{display:none!important}
-  .nav{display:flex!important}
-}
 
 /* ── COMPREHENSIVE MOBILE OPTIMIZATION ── */
 @media(max-width:768px){
@@ -1004,12 +947,164 @@ body{font-size:14.5px;line-height:1.7}
 })();
 </script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style>
+<style id="iw-mobile-2026-10">
+/* ════════════════════════════════════════════════════════════
+   OCT 2026 — phone-first navigation and reading
+   1. Section tabs: sticky top bar on desktop, fixed bottom bar on phones
+   2. Compact top bar on phones
+   3. Tables: 3-column tables stack into cards, wide tables scroll with a pinned first column
+   Loaded last so it overrides the earlier mobile blocks.
+════════════════════════════════════════════════════════════ */
+
+/* ── Tab buttons (shared) ── */
+.tbtn{position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.tb-ico{position:relative;display:inline-block;line-height:1}
+.tb-live{position:absolute;top:-2px;right:-6px;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 0 1.5px var(--card-bg)}
+.tb-txt{white-space:nowrap}
+
+/* Desktop: centre the tabs without clipping the first one when they overflow */
+@media(min-width:769px){
+  .nav{justify-content:flex-start!important}
+  .nav .tbtn:first-child{margin-left:auto}
+  .nav .tbtn:last-child{margin-right:auto}
+  .nav .tb-ico{margin-right:3px}
+}
+
+/* Narrow desktop and tablet landscape: short labels so all seven tabs fit */
+@media(min-width:769px) and (max-width:1040px){
+  .nav .tb-x{display:none}
+}
+
+/* ── 1. Phones and small tablets: bottom tab bar ── */
+@media(max-width:768px){
+  body{padding-bottom:58px}
+  .nav-outer{
+    position:fixed;top:auto;bottom:0;left:0;right:0;z-index:950;
+    display:block;min-height:0;padding:0 0 env(safe-area-inset-bottom,0px);
+    background:var(--card-bg);border-top:1px solid var(--border);border-bottom:none;
+    box-shadow:0 -4px 18px rgba(28,25,23,.10);
+  }
+  .nav-outer .nav{
+    display:flex;flex-direction:row;justify-content:flex-start;gap:0;
+    position:static;padding:0 2px;background:transparent;border:none;box-shadow:none;
+    overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+  }
+  .nav-outer .nav .tbtn{
+    flex:1 0 auto;flex-direction:column;justify-content:center;align-items:center;gap:3px;
+    width:auto;min-width:46px;min-height:58px;margin:0;padding:6px 5px 6px;
+    border:none;border-top:2px solid transparent;border-radius:0;background:none;
+    font-size:10.5px;font-weight:600;letter-spacing:0;line-height:1.1;color:var(--muted);
+  }
+  .nav-outer .nav .tbtn.on{
+    color:var(--accent);border-top-color:var(--accent);
+    background:rgba(149,72,63,.08);font-weight:800;
+  }
+  .nav-outer .nav .tbtn:active{background:rgba(149,72,63,.14)}
+  .nav-outer .nav .tb-ico{font-size:19px}
+  .nav-outer .nav .tb-x{display:none}
+  .nav-ind{display:none!important}
+
+  /* floating buttons and toast sit above the bar */
+  #fab-share{bottom:calc(70px + env(safe-area-inset-bottom,0px))!important;right:12px!important;padding:10px 15px!important}
+  #back-top{bottom:calc(124px + env(safe-area-inset-bottom,0px))!important;right:16px!important;min-height:0!important;padding:0!important}
+  #toast{bottom:calc(74px + env(safe-area-inset-bottom,0px))!important;left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100vw - 24px);white-space:normal!important;text-align:center;transform:translateY(20px)}
+  #toast.show{transform:translateY(0)}
+
+  /* ── 2. Top bar: one row, date left, search and theme right ── */
+  .mh-topbar{flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;padding:2px 6px 2px 14px!important;gap:8px!important}
+  .mh-topbar .mh-date{font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .mh-topbar .mh-toplink{display:none}
+  .mh-topbar .mh-tools{gap:0!important;flex-wrap:nowrap!important;flex-shrink:0}
+  .mh-topbar .ctrl-btn{border-color:transparent!important;min-width:44px;min-height:44px;padding:0!important;justify-content:center;font-size:17px!important}
+
+  /* stat cards: two across reads faster than one long column */
+  .tgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+  /* section sub-tabs: comfortable thumb targets */
+  .rr-nav,.subnav{scroll-snap-type:x proximity}
+  .rr-tab{min-height:44px;scroll-snap-align:start}
+}
+@media(max-width:350px){
+  .nav-outer .nav .tbtn{min-width:40px;padding:6px 2px;font-size:9.5px}
+}
+@media(max-width:339px){
+  .tgrid{grid-template-columns:1fr!important}
+}
+
+/* ── 3a. Narrative tables (3 columns or fewer) become stacked cards ── */
+@media(max-width:640px){
+  table.iw-stack{display:block;width:100%!important;min-width:0!important;margin:0!important}
+  table.iw-stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  table.iw-stack tbody{display:block}
+  table.iw-stack tr{display:block;padding:12px 14px;border-bottom:1px solid var(--border)}
+  table.iw-stack tbody tr:last-child{border-bottom:none}
+  table.iw-stack td{
+    display:block;width:auto!important;padding:0!important;border:none!important;
+    background:transparent!important;font-size:13px!important;line-height:1.55!important;white-space:normal!important;
+  }
+  table.iw-stack td:first-child{font-weight:700;color:var(--accent);margin-bottom:6px}
+  table.iw-stack td + td{margin-top:8px}
+  table.iw-stack td[data-label]::before{
+    content:attr(data-label);display:block;margin-bottom:1px;
+    font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:800;
+    letter-spacing:.7px;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ── 3b. Wide tables keep their grid and scroll sideways ── */
+  .iw-xwrap{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .iw-xwrap > table.iw-wide{min-width:var(--iw-minw,0)}
+  /* a scrolling table runs edge to edge, so nothing peeks out beside the pinned column */
+  .iw-xwrap.iw-over{padding-left:0!important;padding-right:0!important}
+  .iw-xwrap.iw-over::before{
+    content:'Swipe the table sideways to see every column';
+    position:sticky;left:0;display:block;width:max-content;max-width:calc(100vw - 40px);
+    padding:8px 12px 6px;font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:600;color:var(--muted);
+  }
+  .iw-xwrap.iw-pin th:first-child,
+  .iw-xwrap.iw-pin td:first-child{position:sticky;left:0;z-index:2;box-shadow:1px 0 0 var(--border)}
+  /* fill only cells that have no background of their own, so row tints are kept */
+  :where(.iw-xwrap.iw-pin) :where(th,td):first-child{background-color:var(--card-bg)}
+}
+
+/* ── Calculator: all four columns stay on screen, result column included ── */
+@media(max-width:640px){
+  #calc-table th,#calc-table td{padding:8px 6px!important}
+  #calc-table th{white-space:normal!important;letter-spacing:.3px!important}
+  #calc-table td:nth-child(3){font-size:10.5px!important;line-height:1.3!important}
+  #calc-table input{width:78px!important;padding:6px!important}
+}
+/* 16px form text stops iPhones zooming the page when a field is tapped */
+@media(max-width:768px){
+  input[type="text"],input[type="search"],input[type="number"],input[type="email"],select,textarea{font-size:16px!important}
+}
+
+/* ── Dark mode: the masthead title, ticker and live bar kept their light backgrounds ── */
+[data-theme="dark"] .mh-title{background:#16100e}
+[data-theme="dark"] .mh-title p{color:#a8a29e}
+[data-theme="dark"] .ticker-wrap{background:#1c1917!important;border-bottom-color:#292524!important}
+[data-theme="dark"] #ticker span{color:#a8a29e!important}
+[data-theme="dark"] #live-bar{background:#1c1917!important;border-bottom-color:#292524!important}
+[data-theme="dark"] #live-bar .lb-item{border-right-color:#292524!important}
+[data-theme="dark"] #live-bar .lb-key{color:#a8a29e!important}
+[data-theme="dark"] #live-bar .lb-val{color:#e7e5e4!important}
+[data-theme="dark"] #live-bar .lb-label{color:#c9847a!important}
+[data-theme="dark"] #live-bar .lb-sep{background:#292524!important}
+
+/* ── Motion: respect the visitor's setting ── */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pane.on,.subpane.on,.gpane.on{animation:none}
+  .latest,.lb-dot{animation:none!important}
+  #ticker{animation:none!important;position:static!important}
+  .ticker-wrap > div[style]{overflow-x:auto!important;height:auto!important;scrollbar-width:none}
+}
+</style>
 </head>
 <body>
 <div id="main-content" role="main" tabindex="-1">
 <div class="mh-topbar">
   <span class="mh-date" id="dt"></span>
-  <div style="display:flex;align-items:center;gap:10px;">
+  <div class="mh-tools" style="display:flex;align-items:center;gap:10px;">
     <a href="#" class="mh-toplink">E-Paper</a>
     <a href="#" class="mh-toplink">Subscribe</a>
     <a href="#" class="mh-toplink">About</a>
@@ -1050,7 +1145,7 @@ body{font-size:14.5px;line-height:1.7}
   <span class="ticker-label" style="flex-shrink:0;white-space:nowrap;font-family:'Source Sans 3',sans-serif;font-size:9px;font-weight:800;letter-spacing:1.5px;color:#fff;background:#95483f;padding:3px 10px;text-transform:uppercase;margin-right:8px">BREAKING</span>
   <div style="flex:1;min-width:0;overflow:hidden;position:relative;height:1.6em">
     <div id="ticker" style="position:absolute;top:0;left:0;white-space:nowrap;display:inline-block;animation:ticker 60s linear infinite;will-change:transform">
-      <span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">🔴 Two Election Commissioners objected 14+ times to CEC Gyanesh Kumar's decisions, per Indian Express; ECI says decisions were unanimous</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">UPI merchant charges return from 15 Oct: 0.4% MDR on P2M payments above ₹2,000, paid by merchants, not customers</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Sonam Wangchuk's 20 km Ladakh padyatra ended at Leh's Martyrs' Memorial Park on 23 Sept; statehood still unresolved</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Education Minister Dharmendra Pradhan resigned 25 July over NEET-UG 2026 paper leak; Pralhad Joshi now holds the portfolio</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Income tax collected grew 3.5× since FY17, filers only 1.9×; about 2.8 crore people carry the bill</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">E20 ethanol petrol blending: mileage and vehicle-compatibility concerns keep policy under public scrutiny</span>
+      <span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">🔴 500+ detained near Jantar Mantar on 2 Oct at protests seeking CEC Gyanesh Kumar's resignation; CJP calls a fresh march for 10 Oct</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Supreme Court hears on 5 Oct a plea asking whether the CEC can act without the other two Election Commissioners; ECI says decisions were unanimous</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">UPI merchant fee starts 15 Oct: 0.4% MDR on payments to merchants above ₹2,000, paid by merchants, not customers</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">UPI handled 24.07 billion payments worth ₹29.37 lakh crore in September, about 802 million a day (NPCI)</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Petrol ₹102.12 and diesel ₹95.20 in Delhi, unchanged on 3 Oct with Brent above $102 a barrel</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Sonam Wangchuk gave the Centre until 2 Oct to show progress on Ladakh statehood, or peaceful protests resume</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Education Minister Dharmendra Pradhan resigned 25 July over NEET-UG 2026 paper leak; Pralhad Joshi now holds the portfolio</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">Income tax collected grew 3.5× since FY17, filers only 1.9×; about 2.8 crore people carry the bill</span><span style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:#5c5348;padding:0 20px">E20 ethanol petrol blending: mileage and vehicle-compatibility concerns keep policy under public scrutiny</span>
     </div>
   </div>
 </div>
@@ -1073,18 +1168,15 @@ body{font-size:14.5px;line-height:1.7}
   </div>
 
 </div>
-<div class="nav-outer" role="navigation" aria-label="Main navigation">
-  <button class="nav-hamburger" id="nav-ham" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  </button>
-  <div class="nav" id="main-nav" role="tablist">
-  <button class="tbtn on" onclick="sw('ec',this)">🔴 Election Watch</button>
-  <button class="tbtn" onclick="sw('money',this)">💰 Money Watch</button>
-  <button class="tbtn" onclick="sw('tax',this)">🧾 Tax Terrorism</button>
-  <button class="tbtn" onclick="sw('rights',this)">✊ Rights &amp; Dissent</button>
-  <button class="tbtn" onclick="sw('corruption',this)">🏗 Corruption Watch</button>
-  <button class="tbtn" onclick="sw('freebies',this)">🎁 State Budgets</button>
-  <button class="tbtn" onclick="sw('more',this)">🏛 Bench, Media &amp; More</button>
+<div class="nav-outer" role="navigation" aria-label="Sections">
+  <div class="nav" id="main-nav" role="tablist" aria-label="IndiaWatch sections">
+  <button class="tbtn on" role="tab" id="tab-ec" data-tab="ec" aria-selected="true" aria-controls="pane-ec" aria-label="Election Watch" onclick="sw('ec',this)"><span class="tb-ico" aria-hidden="true">🗳<i class="tb-live" aria-hidden="true"></i></span><span class="tb-txt">Election<span class="tb-x"> Watch</span></span></button>
+  <button class="tbtn" role="tab" id="tab-money" data-tab="money" aria-selected="false" aria-controls="pane-money" aria-label="Money Watch" onclick="sw('money',this)"><span class="tb-ico" aria-hidden="true">💰</span><span class="tb-txt">Money<span class="tb-x"> Watch</span></span></button>
+  <button class="tbtn" role="tab" id="tab-tax" data-tab="tax" aria-selected="false" aria-controls="pane-tax" aria-label="Tax Terrorism" onclick="sw('tax',this)"><span class="tb-ico" aria-hidden="true">🧾</span><span class="tb-txt">Tax<span class="tb-x"> Terrorism</span></span></button>
+  <button class="tbtn" role="tab" id="tab-rights" data-tab="rights" aria-selected="false" aria-controls="pane-rights" aria-label="Rights &amp; Dissent" onclick="sw('rights',this)"><span class="tb-ico" aria-hidden="true">✊</span><span class="tb-txt">Rights<span class="tb-x"> &amp; Dissent</span></span></button>
+  <button class="tbtn" role="tab" id="tab-corruption" data-tab="corruption" aria-selected="false" aria-controls="pane-corruption" aria-label="Corruption Watch" onclick="sw('corruption',this)"><span class="tb-ico" aria-hidden="true">🏗</span><span class="tb-txt">Corruption<span class="tb-x"> Watch</span></span></button>
+  <button class="tbtn" role="tab" id="tab-freebies" data-tab="freebies" aria-selected="false" aria-controls="pane-freebies" aria-label="State Budgets" onclick="sw('freebies',this)"><span class="tb-ico" aria-hidden="true">🎁</span><span class="tb-txt"><span class="tb-x">State </span>Budgets</span></button>
+  <button class="tbtn" role="tab" id="tab-more" data-tab="more" aria-selected="false" aria-controls="pane-more" aria-label="Bench, Media &amp; More" onclick="sw('more',this)"><span class="tb-ico" aria-hidden="true">🏛</span><span class="tb-txt"><span class="tb-x">Bench, Media &amp; </span>More</span></button>
   </div><!-- end .nav -->
 </div><!-- end .nav-outer -->
 
@@ -1099,7 +1191,7 @@ body{font-size:14.5px;line-height:1.7}
 
 <!-- ═══════════════════════════════════════════════════════════
      ELECTION WATCH — CEC Gyanesh Kumar (home tab, breaking)
-     Added 26 Sept 2026. Allegations are labelled as allegations;
+     Added 26 Sept 2026, updated 3 Oct 2026. Allegations are labelled as allegations;
      the ECI's and government's responses are given alongside.
      ═══════════════════════════════════════════════════════════ -->
 <div class="pane on" id="pane-ec">
@@ -1141,10 +1233,10 @@ body{font-size:14.5px;line-height:1.7}
 
 <!-- BREAKING -->
 <div class="ec-break" role="region" aria-label="Breaking news">
-  <span class="tag-b">BREAKING · 26 SEPT 2026</span>
+  <span class="tag-b">UPDATED · 3 OCT 2026</span>
   <div>
-    <h2>Two of India's three Election Commissioners objected at least 14 times to decisions by Chief Election Commissioner Gyanesh Kumar</h2>
-    <p>An Indian Express investigation says Commissioners Sukhbir Singh Sandhu and Vivek Joshi objected over 10 months to orders on voter registration, deletions and voter-data systems, some taken without their knowledge, and wrote to the Cabinet Secretary. The ECI says differing views are a normal part of deliberation and all final decisions, including on SIR, were unanimous. Congress has launched nationwide protests, the Cockroach Janta Party has set a resignation deadline of today with protests from 2 October, and on 23 September the Supreme Court split on how to hear the challenge to the law used to appoint him.</p>
+    <h2>More than 500 detained near Jantar Mantar as protests demand Chief Election Commissioner Gyanesh Kumar's resignation; Supreme Court hears a challenge on Monday</h2>
+    <p>On Gandhi Jayanti, 2 October, Delhi Police detained more than 500 people heading to Jantar Mantar, including AAP's Atishi, Saurabh Bharadwaj and Sanjay Singh. Police said no permission had been given and prohibitory orders were in force; 12 metro stations were shut and mobile internet was suspended near the site. In Mumbai the Cockroach Janta Party rallied at Shivaji Park and said it will march to Jantar Mantar on 10 October if Kumar stays. On Monday, 5 October, a Supreme Court bench led by CJI Surya Kant hears a plea asking under what authority he acted without his two fellow Commissioners.</p><p>The protests follow an Indian Express investigation which says Commissioners Sukhbir Singh Sandhu and Vivek Joshi objected at least 14 times over 10 months to orders on voter registration, deletions and voter-data systems, some taken without their knowledge. The ECI says differing views are a normal part of deliberation, not a rupture, and that all final decisions, including on SIR, were unanimous.</p>
   </div>
 </div>
 
@@ -1213,6 +1305,7 @@ body{font-size:14.5px;line-height:1.7}
 <tr><td><b>2 Jan 2024</b></td><td>Act comes into force. Two months later, Kumar and Sandhu become the first ECs chosen under it.</td><td>The Supreme Court declined to stay those appointments but agreed to hear challenges.</td></tr>
 <tr><td><b>Jan 2026</b></td><td>Supreme Court issues notice on NGO Lok Prahari's challenge to Section 16, but refuses to stay it.</td><td>Section 16 remains in force; no court has ruled on its validity.</td></tr>
 <tr style="border-left:3px solid var(--rule)"><td><b>23 Sept 2026</b></td><td>Two-judge bench splits on whether the appointment law needs a Constitution Bench, and sends it to the CJI.</td><td>More than two and a half years after the law took effect, its validity is still undecided.</td></tr>
+<tr style="border-left:3px solid var(--rule)"><td><b>29 Sept 2026</b></td><td>A fresh petition seeks a writ of quo warranto, asking under what authority Kumar exercised on his own the powers Article 324 gives to the Commission as a body. CJI Surya Kant agrees to list it; the hearing is set for 5 October.</td><td>The first case to put the reported dissent inside the Commission, not just the appointment law, before the court. The ECI says its decisions were unanimous.</td></tr>
 </tbody>
 </table>
 </div>
@@ -1221,7 +1314,7 @@ body{font-size:14.5px;line-height:1.7}
     <li><b>Can he be arrested?</b> Section 16 bars courts from hearing cases over official acts; it does not mention arrest or investigation, so how it applies would be for courts to decide.</li>
     <li><b>Can he be removed?</b> Only like a Supreme Court judge: a proved charge of "misbehaviour or incapacity" and a special majority in both Houses (Article 324(5) with 124(4)).</li>
   </ul>
-  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> Outlook India (24 Sept 2026, "The Gyanesh Kumar Test", citing Rajya Sabha records of Amendment No. 39) · Outlook India (24 Sept 2026, "CJI Out, Minister In") · Outlook India (23 Sept 2026, "SIR To Removal Bid") · Supreme Court, <i>Anoop Baranwal v Union of India</i> (2 Mar 2023).</div>
+  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> Outlook India (24 Sept 2026, "The Gyanesh Kumar Test", citing Rajya Sabha records of Amendment No. 39) · Outlook India (24 Sept 2026, "CJI Out, Minister In") · Outlook India (23 Sept 2026, "SIR To Removal Bid") · Bar and Bench, The Statesman (29 Sept 2026, quo warranto plea) · The Hans India (2 Oct 2026, listing for 5 Oct) · Supreme Court, <i>Anoop Baranwal v Union of India</i> (2 Mar 2023).</div>
 </div>
 
 <!-- ═══ TIMELINE OF CONTROVERSY ═══ -->
@@ -1241,11 +1334,12 @@ body{font-size:14.5px;line-height:1.7}
 <tr><td><b>27 May 2026</b></td><td>Supreme Court upholds ECI's power to run SIR in Bihar, with safeguards: Aadhaar accepted for identity, citizenship disputes go to the competent authority.</td><td>A legal win for the ECI on its powers, with limits on how it checks citizenship.</td></tr>
 <tr style="border-left:3px solid var(--rule)"><td><b>Sept 2026</b></td><td>Indian Express: ECs Sandhu and Joshi objected 14+ times, including to Form 6 changes Joshi said needed a rules amendment and Sandhu called "unauthorised" and "illegal", and to the "centralisation" of the voter database.</td><td>ECI: differing views are normal and decisions were unanimous. Kumar has not personally responded.</td></tr>
 <tr style="border-left:3px solid var(--rule)"><td><b>23–26 Sept 2026</b></td><td>Congress protests nationwide; Mamata Banerjee and Uddhav Thackeray demand his arrest; a plea in the Supreme Court seeks criminal proceedings; CJP sets a resignation deadline of 26 Sept.</td><td>NDA ally Chirag Paswan asks the ECI to respond. Bengal BJP chief Samik Bhattacharya says Kumar deserves a Padma Bhushan for poll management.</td></tr>
+<tr style="border-left:3px solid var(--rule)"><td><b>2 Oct 2026</b></td><td>Gandhi Jayanti protests in Delhi and Mumbai. More than 500 people are detained on the way to Jantar Mantar, including AAP's Atishi, Saurabh Bharadwaj and Sanjay Singh; 12 metro stations are shut and mobile internet is suspended nearby. CJP holds a "Jail Bharo" rally at Shivaji Park and calls a march to Jantar Mantar for 10 Oct. Reports now put names removed from draft rolls since 2025 at over 13 crore across 30 states and UTs.</td><td>Delhi Police say the rally had no permission and Section 163 BNSS orders were in force. Mumbai Police say a 2013 High Court order bars them from allowing gatherings at Shivaji Park. Amnesty International calls the response an attack on the right to assemble. The ECI maintains the internal differences are not a rupture.</td></tr>
 </tbody>
 </table>
 </div>
 <div style="padding:0 20px;">
-  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> ANI, ThePrint, Deccan Herald (Aug 2025, press conference) · News On AIR (8 &amp; 11 Aug 2025, ECI notices to Rahul Gandhi) · Deccan Herald (5 Nov 2025, "H-files"; Dec 2025–Jan 2026, SIR draft roll figures) · News On AIR (Dec 2025–Jan 2026, West Bengal and UP draft rolls) · Outlook India (23–25 Sept 2026) · CNBC (25 Sept 2026, CJP deadline) · Wikipedia, "2025 Indian electoral controversy".</div>
+  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> ANI, ThePrint, Deccan Herald (Aug 2025, press conference) · News On AIR (8 &amp; 11 Aug 2025, ECI notices to Rahul Gandhi) · Deccan Herald (5 Nov 2025, "H-files"; Dec 2025–Jan 2026, SIR draft roll figures) · News On AIR (Dec 2025–Jan 2026, West Bengal and UP draft rolls) · Outlook India (23–25 Sept 2026) · CNBC (25 Sept 2026, CJP deadline) · Outlook India (2 Oct 2026, Jantar Mantar detentions) · Al Jazeera, ABC News Australia (2 Oct 2026, protests and internet suspension) · Amnesty International (2 Oct 2026) · NewsBytes (3 Oct 2026, 10 Oct march) · Wikipedia, "2025 Indian electoral controversy".</div>
 </div>
 
 <!-- ═══ THE FAVOUR QUESTION ═══ -->
@@ -1284,7 +1378,7 @@ body{font-size:14.5px;line-height:1.7}
     <li><b>Whether the ECI is accountable.</b> The immunity clause, the refusal to share CCTV footage beyond 45 days, and the press conference demanding an affidavit from the Leader of Opposition all fed a debate on how an independent regulator should answer criticism.</li>
     <li><b>The other view.</b> The government and the ECI argue that the Commission is under attack because it is cleaning rolls that benefited some parties, that elections under Kumar produced wins for opposition parties too, and that attacking the umpire undermines voter trust more than any roll revision.</li>
   </ul>
-  <div class="sbox blue" style="margin-bottom:18px;"><b>What to watch:</b> whether Kumar responds to the dissent report; the CJI's decision on a Constitution Bench for the appointment law; the Supreme Court plea for criminal proceedings; CJP's protests from 2 October; and the pending Rajya Sabha removal notice.</div>
+  <div class="sbox blue" style="margin-bottom:18px;"><b>What to watch:</b> the Supreme Court hearing on 5 October on whether Kumar could act without his fellow Commissioners; CJP's march to Jantar Mantar on 10 October; the CJI's decision on a Constitution Bench for the appointment law; the separate plea for criminal proceedings; whether Kumar responds personally to the dissent report; and the pending Rajya Sabha removal notice.</div>
 </div>
 
 </div><!-- end #pane-ec -->
@@ -1313,10 +1407,10 @@ body{font-size:14.5px;line-height:1.7}
   <ul class="buls">
     <li><b>2016:</b> NPCI (an RBI/bank-owned non-profit) launched UPI to let anyone move money instantly by mobile number, part of a "less-cash," financial-inclusion push.</li>
     <li>Its rocket growth is partly an accident of timing, UPI landed months before Nov 2016 demonetisation made cash scarce.</li>
-    <li><b>Today:</b> 22.6 billion transactions in a single month (Mar 2026); ~₹260 lakh crore moved in FY24-25.</li>
+    <li><b>Today:</b> 24.07 billion transactions worth ₹29.37 lakh crore in September 2026 alone, about 802 million a day; ~₹260 lakh crore moved in FY24-25.</li>
     <li><b>Was it "promised free"?</b> Yes, by policy, not law. Merchant fees (MDR) existed until the government zero-rated them in Jan 2020 to push digital adoption. The Finance Ministry denied any return of MDR/GST on UPI as recently as June 2025.</li>
   </ul>
-  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> NPCI launch release (2016) · India Stack · Tribune India &amp; News on Air (Finance Ministry denials, Apr &amp; Jun 2025) · Dept. of Financial Services.</div>
+  <div class="sbox" style="margin-bottom:16px;"><b>Sources:</b> NPCI launch release (2016) · NPCI monthly data (Sept 2026, via Business Today and DD News) · India Stack · Tribune India &amp; News on Air (Finance Ministry denials, Apr &amp; Jun 2025) · Dept. of Financial Services.</div>
 </div>
 
 <!-- ═══ SECTION 2: THE NEW CHARGE ═══ -->
@@ -1391,7 +1485,7 @@ body{font-size:14.5px;line-height:1.7}
   </div>
 
   <div class="ctable-outer" style="margin:0 0 12px;">
-  <table class="ctable" id="calc-table">
+  <table class="ctable" id="calc-table" data-iw-fit>
   <thead><tr><th>Monthly spend</th><th style="text-align:right">₹/month</th><th>Tax rate</th><th style="text-align:right">Hidden tax</th></tr></thead>
   <tbody id="calc-tbody"></tbody>
   </table>
@@ -1770,8 +1864,8 @@ body{font-size:14.5px;line-height:1.7}
 <div style="background:var(--card-bg);border-left:5px solid #a1503f;padding:16px 24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:16px 24px;border-radius:0 8px 8px 0;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
   <span style="font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:800;color:#fff;background:var(--accent);padding:5px 12px;border-radius:5px;white-space:nowrap;" id="fuel-banner-date">&#128308; TODAY · <span id="fuel-today-date">N/A</span></span>
   <div>
-    <div style="font-family:'Lora',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.4;" id="fuel-banner-headline">Petrol &#8377;<span id="banner-petrol">102.12</span>/L · Diesel &#8377;<span id="banner-diesel">95.20</span>/L in Delhi · USD/INR &#8377;<span id="banner-usd">96.0</span> · Brent ~$<span id="banner-brent">104</span>/bbl</div>
-    <div style="font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--muted);margin-top:4px;" id="fuel-banner-sub">Brent back above $104/bbl (26 Sept) after Houthi strikes on Saudi oil sites · pump prices frozen since June · OMCs absorbing losses, ICRA warns of squeeze</div>
+    <div style="font-family:'Lora',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.4;" id="fuel-banner-headline">Petrol &#8377;<span id="banner-petrol">102.12</span>/L · Diesel &#8377;<span id="banner-diesel">95.20</span>/L in Delhi · USD/INR &#8377;<span id="banner-usd">96.2</span> · Brent ~$<span id="banner-brent">102</span>/bbl</div>
+    <div style="font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--muted);margin-top:4px;" id="fuel-banner-sub">Brent above $102/bbl (3 Oct) as Saudi Arabia weighs an offensive against the Houthis · pump prices unchanged on 3 Oct · state refiners absorbing the gap, ICRA warns of squeeze</div>
   </div>
 </div>
 
@@ -1876,12 +1970,12 @@ body{font-size:14.5px;line-height:1.7}
     <div class="tcard" style="flex:1;min-width:130px;">
       <div class="tclabel">Delhi Petrol</div>
       <div class="tcval" style="font-size:24px;" id="stat-petrol">&#8377;102.12</div>
-      <div class="tcsub" id="stat-petrol-sub">Delhi · 26 Sept 2026</div>
+      <div class="tcsub" id="stat-petrol-sub">Delhi · 3 Oct 2026</div>
     </div>
     <div class="tcard" style="flex:1;min-width:130px;">
       <div class="tclabel">Delhi Diesel</div>
       <div class="tcval" style="font-size:24px;" id="stat-diesel">&#8377;95.20</div>
-      <div class="tcsub" id="stat-diesel-sub">Delhi · 26 Sept 2026</div>
+      <div class="tcsub" id="stat-diesel-sub">Delhi · 3 Oct 2026</div>
     </div>
     <div class="tcard" style="flex:1;min-width:130px;border-top-color:#8b4500">
       <div class="tclabel">Tax in Petrol Price</div>
@@ -2111,7 +2205,12 @@ body{font-size:14.5px;line-height:1.7}
  </p>
 
  <!-- CURRENT STATUS callout -->
- <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">🔴 Current status · updated 26 Sept 2026</div>
+ <div style="font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">🔴 Current status · updated 3 Oct 2026</div>
+  <div style="background:#fff8f0;border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:12px;box-shadow:var(--shadow);">
+    <p style="font-family:'Source Serif 4',serif;font-size:13.5px;color:var(--ink);line-height:1.75;margin:0;">
+      <b style="font-family:'Lora',serif;">Jantar Mantar was sealed on Gandhi Jayanti.</b> On <b>2 October 2026</b> Delhi Police detained <b>more than 500 people</b> trying to reach the square for a rally seeking the resignation of Chief Election Commissioner Gyanesh Kumar, among them AAP leaders Atishi, Saurabh Bharadwaj and Sanjay Singh and activists from AISA, SFI and DYFI. Police said no permission had been granted and prohibitory orders under Section 163 of the BNSS were in force across New Delhi district; 12 metro stations were closed and mobile internet was suspended around the site. Amnesty International said the response trampled the right to peaceful assembly. In Mumbai, where police said a 2013 Bombay High Court order left them unable to permit a gathering at Shivaji Park, the CJP rallied anyway and announced a march to Jantar Mantar on <b>10 October</b>. The background is in the Election Watch tab.
+    </p>
+  </div>
   <div style="background:#fff8f0;border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:12px;box-shadow:var(--shadow);">
     <p style="font-family:'Source Serif 4',serif;font-size:13.5px;color:var(--ink);line-height:1.75;margin:0;">
       <b style="font-family:'Lora',serif;">The NEET demand was met.</b> Sonam Wangchuk fasted for <b>26 days from 28 June to 23 July 2026</b> at Jantar Mantar in support of the Gen-Z led <b>Cockroach Janta Party (CJP)</b>, which was demanding the resignation of Education Minister <b>Dharmendra Pradhan</b> over the NEET-UG 2026 paper leak. He ended the fast on his own on 23 July after the government gave assurances; there was no forcible removal or hospitalisation, correcting an earlier, inaccurate version of this page. Two days later, on <b>25 July</b>, after three rounds of talks between ministers (JP Nadda, Jitendra Singh) and CJP representatives, Pradhan resigned, and the government agreed to CJP's other two demands: dropping FIRs against protesters and compensating NEET-leak victims' families. <b>Pralhad Joshi</b> was given additional charge of the Education Ministry the next day.
@@ -2119,11 +2218,11 @@ body{font-size:14.5px;line-height:1.7}
   </div>
   <div style="background:#fff8f0;border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:20px;box-shadow:var(--shadow);">
     <p style="font-family:'Source Serif 4',serif;font-size:13.5px;color:var(--ink);line-height:1.75;margin:0;">
-      <b style="font-family:'Lora',serif;">A separate, older demand is live right now.</b> Wangchuk's underlying cause has long been Ladakh statehood and Sixth Schedule constitutional safeguards, the issue that led to his detention under the National Security Act on 26 September 2025, two days after protests that left <b>4 dead and dozens injured</b> in Leh; he was released on 14 March 2026 after about six months in custody. Talks between the Leh Apex Body / Kargil Democratic Alliance and a Home Ministry sub-committee on 9 September 2026 produced, in Wangchuk's words, "hardly anything new." He initially threatened a padyatra from 19&ndash;24 September, then scaled it down on 17 September, citing cold weather. The <b>symbolic 20&nbsp;km march went ahead on 23 September</b>, ending at the NDS Martyrs' Memorial Park in Leh, where Apex Body and religious leaders including Chering Dorjay Lakrook and Wangchuk addressed the crowd. A <b>"Martyrs' Day" gathering on 24 September</b> marked one year since four people died in last year's unrest; the Leh District Bar Association suspended court work that day in solidarity. Talks with the Centre continue, with a possible new Article 371K reported to be under discussion, but statehood itself remains unresolved.
+      <b style="font-family:'Lora',serif;">A separate, older demand is live right now.</b> Wangchuk's underlying cause has long been Ladakh statehood and Sixth Schedule constitutional safeguards, the issue that led to his detention under the National Security Act on 26 September 2025, two days after protests that left <b>4 dead and dozens injured</b> in Leh; he was released on 14 March 2026 after about six months in custody. Talks between the Leh Apex Body / Kargil Democratic Alliance and a Home Ministry sub-committee on 9 September 2026 produced, in Wangchuk's words, "hardly anything new." He initially threatened a padyatra from 19&ndash;24 September, then scaled it down on 17 September, citing cold weather. The <b>symbolic 20&nbsp;km march went ahead on 23 September</b>, ending at the NDS Martyrs' Memorial Park in Leh, where Apex Body and religious leaders including Chering Dorjay Lakrook and Wangchuk addressed the crowd. A <b>"Martyrs' Day" gathering on 24 September</b> marked one year since four people died in last year's unrest; the Leh District Bar Association suspended court work that day in solidarity. Talks with the Centre continue, with a possible new Article 371K reported to be under discussion, but statehood itself remains unresolved. On 27 September, in Delhi to mark a year since his NSA detention, Wangchuk said he wanted to see real progress before Gandhi Jayanti on 2 October, failing which peaceful protests would resume. IndiaWatch had found no announcement of a fresh programme as of 3 October.
  </p>
   </div>
 
-  <div class="sbox" style="margin-bottom:22px;"><b>Sources:</b> Wikipedia (Sonam Wangchuk; Dharmendra Pradhan; 2026 Delhi Jantar Mantar protests) · Khaleej Times &amp; WION (25&ndash;26 Jul 2026, Pradhan resignation &amp; Joshi appointment) · Aaj English TV (25 Jul 2026, talks &amp; CJP demands) · India TV News &amp; Business Today (10&ndash;13 Sept 2026, Ladakh padyatra threat) · Free Press Journal (18 Sept 2026, padyatra scaled down to 23&ndash;24 Sept) · Daily Excelsior (Sept 2026, padyatra ends at NDS Martyrs' Memorial Park; Leh Bar suspends work on 24 Sept) · Sunday Guardian (Sept 2026, Article 371K talks) · Asian News Channel / PTI (NSA detention &amp; release timeline).</div>
+  <div class="sbox" style="margin-bottom:22px;"><b>Sources:</b> Wikipedia (Sonam Wangchuk; Dharmendra Pradhan; 2026 Delhi Jantar Mantar protests) · Khaleej Times &amp; WION (25&ndash;26 Jul 2026, Pradhan resignation &amp; Joshi appointment) · Aaj English TV (25 Jul 2026, talks &amp; CJP demands) · India TV News &amp; Business Today (10&ndash;13 Sept 2026, Ladakh padyatra threat) · Free Press Journal (18 Sept 2026, padyatra scaled down to 23&ndash;24 Sept) · Daily Excelsior (Sept 2026, padyatra ends at NDS Martyrs' Memorial Park; Leh Bar suspends work on 24 Sept) · Sunday Guardian (Sept 2026, Article 371K talks) · Asian News Channel / PTI (NSA detention &amp; release timeline) · The News Mill / ANI (27 Sept 2026, 2 Oct deadline) · Outlook India, Al Jazeera, Amnesty International (2 Oct 2026, Jantar Mantar detentions).</div>
 
  <!-- HISTORY -->
  <div style="font-family:'Lora',serif;font-size:17px;font-weight:900;color:var(--ink);margin-bottom:6px;line-height:1.3;">🕰 A Decade of Dissent, and the Standard Reply</div>
@@ -4945,7 +5044,7 @@ Democracy's press freedom rests on one axiom: the government and the press are a
 
 
 <footer>
- &copy; 2025 IndiaWatch &nbsp;·&nbsp; Truth &nbsp;·&nbsp; Accountability &nbsp;·&nbsp; Transparency &nbsp;·&nbsp;
+ &copy; 2026 IndiaWatch &nbsp;·&nbsp; Truth &nbsp;·&nbsp; Accountability &nbsp;·&nbsp; Transparency &nbsp;·&nbsp;
  Sources: <a href="https://www.livelaw.in" target="_blank">LiveLaw</a> &nbsp;·&nbsp;
  <a href="https://indiankanoon.org" target="_blank">IndianKanoon</a> &nbsp;·&nbsp;
  <a href="https://www.thehindu.com" target="_blank">The Hindu</a> &nbsp;·&nbsp;
@@ -5043,23 +5142,62 @@ document.getElementById('dt').textContent=now.toLocaleDateString('en-IN',{weekda
   if(authEl) authEl.textContent = '— ' + q.a;
   if(shareEl){
     const tweet = '"' + q.q + '" — ' + q.a + '\n\n📍 indiawatch.net | #IndiaWatch #Accountability';
-    shareEl.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet);
+    shareEl.href = 'https://x.com/intent/post?text=' + encodeURIComponent(tweet);
   }
 })();
 
 
 
-function sw(name,btn){
-  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('pane-'+name).classList.add('on');
-  btn.classList.add('on');
-  if(window.scrollY > 100) window.scrollTo({top:0,behavior:'smooth'});
+const IW_TABS=['ec','money','tax','rights','corruption','freebies','more'];
+let iwCurTab='ec';
+const iwTabScroll={};
+function iwPaneTop(){
+  // document Y of the tab content, minus the sticky top nav on desktop
+  const first=document.querySelector('.pane.on')||document.querySelector('.pane');
+  if(!first) return 0;
+  const navO=document.querySelector('.nav-outer');
+  const stuck=navO && getComputedStyle(navO).position==='sticky' ? navO.offsetHeight : 0;
+  return Math.max(0, Math.round(first.getBoundingClientRect().top + window.scrollY - stuck));
+}
+function sw(name,btn,opts){
+  const pane=document.getElementById('pane-'+name);
+  if(!pane) return;
+  opts=opts||{};
+  const same=(name===iwCurTab);
+  if(!same) iwTabScroll[iwCurTab]=window.scrollY;
+  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p===pane));
+  document.querySelectorAll('.tbtn').forEach(b=>{
+    const on=b.dataset.tab===name;
+    b.classList.toggle('on',on);
+    b.setAttribute('aria-selected',on?'true':'false');
+  });
+  // older markup passed the clicked element as btn; make sure nothing else keeps a stray .on
+  document.querySelectorAll('.lb-item.on').forEach(el=>el.classList.remove('on'));
+  iwCurTab=name;
+
+  // Scroll: tapping the tab you are on goes to its top; coming back to a tab
+  // returns you to where you left it; a tab you have not opened starts at its top.
+  const top=iwPaneTop();
+  if(same){
+    if(window.scrollY>top) window.scrollTo({top:top,behavior:'smooth'});
+  } else if(!opts.keepScroll){
+    const saved=iwTabScroll[name];
+    if(typeof saved==='number' && saved>top) window.scrollTo({top:saved,behavior:'instant'});
+    else if(window.scrollY>top) window.scrollTo({top:top,behavior:'instant'});
+  }
+
+  // Shareable address: indiawatch.net/#money opens Money Watch
+  if(!opts.fromHash){
+    try{ history.replaceState(null,'', name==='ec' ? location.pathname+location.search : '#'+name); }catch(e){}
+  }
 
   if(RSS_FEEDS[name]) loadTabNews(name);
   if(name==='money'){ if(!oilDone) drawOil(); }
   if(name==='tax'){ drawTaxTab(); }
   if(window.iwAddReadMore) setTimeout(window.iwAddReadMore, 200);
+  if(window.iwEnhanceTables) setTimeout(window.iwEnhanceTables, 120);
+  // page height changed with the tab: let scroll-progress and the nav underline re-measure
+  setTimeout(()=>window.dispatchEvent(new Event('resize')), 60);
 }
 
 // ── HOVER PRELOAD: fetch tab data before user clicks ──
@@ -5424,7 +5562,7 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(injectCardShares,
   const xb = document.getElementById('share-x');
   const li = document.getElementById('share-li');
   if (wa) wa.href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
-  if (xb) xb.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+  if (xb) xb.href = `https://x.com/intent/post?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
   if (li) li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 
   const fab = document.getElementById('fab-share');
@@ -5458,7 +5596,7 @@ function copyPageLink() {
   }
 }
 
-const IW_DEFAULT  = { petrol: 102.12, diesel: 95.20, lastUpdated: '2026-09-26' };
+const IW_DEFAULT  = { petrol: 102.12, diesel: 95.20, lastUpdated: '2026-10-03' };
 const IW_STORE_KEY = 'iw_prices_v2';
 const IW_TTL       = 6 * 60 * 60 * 1000; // 6 hours
 
@@ -5583,7 +5721,7 @@ const FX_META = {
 };
 
 const FX_FALLBACK = {
-  USD:95.50, EUR:107.80, GBP:122.10, JPY:0.623, CHF:108.90,
+  USD:96.20, EUR:107.80, GBP:122.10, JPY:0.623, CHF:108.90,
   CNY:13.18, AED:26.05, SAR:25.51, SGD:71.80, AUD:62.40,
   CAD:69.90, PKR:0.343, BDT:0.795, LKR:0.295
 };
@@ -6214,7 +6352,7 @@ let globalNewsCache = {};
     <h2>⌨ Keyboard Shortcuts</h2>
     <div class="sp-row"><kbd class="sp-key">/</kbd><span class="sp-desc">Open search</span></div>
     <div class="sp-row"><kbd class="sp-key">D</kbd><span class="sp-desc">Toggle dark mode</span></div>
-    <div class="sp-row"><kbd class="sp-key">1 to 5</kbd><span class="sp-desc">Switch main tabs</span></div>
+    <div class="sp-row"><kbd class="sp-key">1 to 7</kbd><span class="sp-desc">Switch main tabs</span></div>
     <div class="sp-row"><kbd class="sp-key">Home</kbd><span class="sp-desc">Back to top</span></div>
     <div class="sp-row"><kbd class="sp-key">Esc</kbd><span class="sp-desc">Close panels</span></div>
     <div class="sp-row"><kbd class="sp-key">?</kbd><span class="sp-desc">Show this panel</span></div>
@@ -6246,31 +6384,7 @@ document.getElementById('dark-toggle')?.addEventListener('click', ()=>{
   showToast(isDark ? '☀️ Light mode on' : '🌙 Dark mode on');
 });
 
-/* ─ Hamburger nav ─ */
-const ham = document.getElementById('nav-ham');
 const nav = document.getElementById('main-nav');
-ham?.addEventListener('click', ()=>{
-  const open = nav.classList.toggle('open');
-  ham.setAttribute('aria-expanded', open);
-  ham.innerHTML = open
-    ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
-    : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
-});
-
-nav?.addEventListener('click', e=>{
-  if(e.target.classList.contains('tbtn')){
-    nav.classList.remove('open');
-    ham?.setAttribute('aria-expanded','false');
-    ham.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
-  }
-});
-
-document.addEventListener('click', e=>{
-  if(nav?.classList.contains('open') && !nav.contains(e.target) && !ham.contains(e.target)){
-    nav.classList.remove('open');
-    ham?.setAttribute('aria-expanded','false');
-  }
-});
 
 /* ─ Search ─ */
 const searchToggle=document.getElementById('search-toggle');
@@ -6314,7 +6428,6 @@ window.searchGo=function(tab,sub){
     sw(tab,btn);
   }
   closeSearch();
-  if(window.scrollY > 100) window.scrollTo({top:0,behavior:'smooth'});
 };
 function closeSearch(){
   searchWrap.classList.remove('open');
@@ -6372,7 +6485,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     if(spanel?.classList.contains('open')){spanel.classList.remove('open');return;}
     if(searchWrap?.classList.contains('open')){closeSearch();return;}
-    if(nav?.classList.contains('open')){nav.classList.remove('open');ham?.setAttribute('aria-expanded','false');}
     return;
   }
   if(inInput) return;
@@ -6402,11 +6514,7 @@ document.querySelectorAll('.lb-item[role="button"]').forEach(el=>{
   });
 });
 
-/* ─ Mobile share fab ─ */
-window.addEventListener('load',()=>{
-  const fab=document.getElementById('fab-share');
-  if(fab&&window.innerWidth<=640)fab.style.display='flex';
-});
+/* ─ Mobile share fab: shown after the reader scrolls (see checkScroll), so it never covers the lead story ─ */
 
 /* ─ Click-to-copy for article headlines ─ */
 document.addEventListener('click',e=>{
@@ -6418,10 +6526,15 @@ document.addEventListener('click',e=>{
 
 /* ─ Active nav indicator (auto-scroll active tab into view on mobile) ─ */
 window._origSw = window.sw;
-window.sw = function(name, btn){
-  if(window._origSw) window._origSw(name, btn);
-
-  requestAnimationFrame(()=>{ btn?.scrollIntoView({inline:'center',behavior:'smooth',block:'nearest'}); });
+window.sw = function(name, btn, opts){
+  if(window._origSw) window._origSw(name, btn, opts);
+  // keep the active tab visible inside the tab strip (never scrolls the page)
+  requestAnimationFrame(()=>{
+    const strip=document.getElementById('main-nav');
+    const active=strip && strip.querySelector('.tbtn.on');
+    if(!active || strip.scrollWidth<=strip.clientWidth) return;
+    strip.scrollTo({left:active.offsetLeft-(strip.clientWidth-active.offsetWidth)/2,behavior:'smooth'});
+  });
 };
 
 })();
@@ -6433,7 +6546,8 @@ window.sw = function(name, btn){
   try {
     if(!localStorage.getItem('iw_visited')){
       localStorage.setItem('iw_visited','1');
-      setTimeout(()=>window.showToast&&showToast('💡 Tip: press D for dark mode, / to search'),1800);
+      // keyboard tip is for desktop only; on phones the tab bar is always in view
+      if(!window.matchMedia('(max-width:768px)').matches) setTimeout(()=>window.showToast&&showToast('💡 Tip: press D for dark mode, / to search'),1800);
     }
   } catch(e){}
 })();
@@ -6442,6 +6556,7 @@ window.sw = function(name, btn){
   const nav=document.getElementById('main-nav');
   if(!nav)return;
   const indicator=document.createElement('div');
+  indicator.className='nav-ind';
   indicator.style.cssText='position:absolute;bottom:0;height:3px;background:var(--rule);transition:left .25s ease,width .25s ease;pointer-events:none;border-radius:3px 3px 0 0';
   nav.style.position='relative';
   nav.appendChild(indicator);
@@ -6453,7 +6568,7 @@ window.sw = function(name, btn){
     requestAnimationFrame(()=>{
       rafPending=false;
       const active=nav.querySelector('.tbtn.on');
-      if(!active||window.innerWidth<=640){indicator.style.display='none';return;}
+      if(!active||window.innerWidth<=768){indicator.style.display='none';return;}
 
       const navRect=nav.getBoundingClientRect();
       const btnRect=active.getBoundingClientRect();
@@ -6505,8 +6620,8 @@ window.sw = function(name, btn){
 
 
   const origSw2 = window.sw;
-  window.sw = function(name, btn){
-    if(origSw2) origSw2(name, btn);
+  window.sw = function(name, btn, opts){
+    if(origSw2) origSw2(name, btn, opts);
     setTimeout(initCollapse, 50);
   };
 })();
@@ -6517,7 +6632,7 @@ function xShareUrl(text, link) {
   let t = text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/<[^>]+>/g,'');
   if (t.length > maxText) t = t.slice(0, maxText - 1) + '…';
   const tweet = t + '\n\n📍 indiawatch.net | #IndiaWatch #Accountability';
-  return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet) + (link ? '&url=' + encodeURIComponent(link) : '');
+  return 'https://x.com/intent/post?text=' + encodeURIComponent(tweet) + (link ? '&url=' + encodeURIComponent(link) : '');
 }
 
 const X_ICON = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.261 5.632 5.903-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
@@ -6552,12 +6667,121 @@ function attachXShareButtons() {
 window.addEventListener('load', attachXShareButtons);
 (function(){
   const origSw3 = window.sw;
-  window.sw = function(name, btn){
-    if(origSw3) origSw3(name, btn);
+  window.sw = function(name, btn, opts){
+    if(origSw3) origSw3(name, btn, opts);
     setTimeout(attachXShareButtons, 80);
   };
 })();
 
+</script>
+<script>
+/* ── OCT 2026: phone table handling + shareable tab links ── */
+(function(){
+  'use strict';
+  var ro = ('ResizeObserver' in window) ? new ResizeObserver(function(entries){
+    for (var i=0;i<entries.length;i++) measure(entries[i].target);
+  }) : null;
+  var phone = window.matchMedia('(max-width:640px)');
+
+  function scroller(t){
+    var par = t.parentElement;
+    var ox = par ? getComputedStyle(par).overflowX : '';
+    if (par && (ox === 'auto' || ox === 'scroll')) return par;
+    var w = document.createElement('div');
+    w.style.overflowX = 'auto';
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+    return w;
+  }
+
+  // Give a wide table room to breathe only if it needs it: either it already
+  // overflows, or squeezing it into the screen makes its rows very tall.
+  function size(wrap, t){
+    if (t.dataset.iwSized || !phone.matches || t.hasAttribute('data-iw-fit')) return;
+    var body = t.tBodies[0];
+    if (!body || !body.rows.length) return;          // rows are filled in later by script
+    t.dataset.iwSized = '1';
+    var crushed = body.getBoundingClientRect().height / body.rows.length > 96;
+    if (wrap.scrollWidth > wrap.clientWidth + 4 || crushed) t.classList.add('iw-wide');
+  }
+
+  function measure(wrap){
+    var t = wrap.querySelector('table');
+    if (!t || !wrap.clientWidth) return;
+    size(wrap, t);
+    var over = wrap.scrollWidth > wrap.clientWidth + 4;
+    var pin = false;
+    if (over && phone.matches && t.rows[0] && t.rows[0].cells[0]) {
+      var w = t.rows[0].cells[0].getBoundingClientRect().width;
+      pin = w > 0 && w <= wrap.clientWidth * 0.38;
+    }
+    if (wrap.classList.contains('iw-over') !== over) wrap.classList.toggle('iw-over', over);
+    if (wrap.classList.contains('iw-pin') !== pin) wrap.classList.toggle('iw-pin', pin);
+  }
+
+  function enhance(){
+    var tables = document.querySelectorAll('table');
+    for (var i=0;i<tables.length;i++){
+      var t = tables[i];
+      var head = t.tHead && t.tHead.rows[0];
+      var cols = head ? head.cells.length : (t.rows[0] ? t.rows[0].cells.length : 0);
+      if (!cols) continue;
+
+      if (cols <= 3 && head) {
+        // narrative table: label each cell with its column heading for the stacked phone layout
+        t.classList.add('iw-stack');
+        for (var b=0;b<t.tBodies.length;b++){
+          var rows = t.tBodies[b].rows;
+          for (var r=0;r<rows.length;r++){
+            for (var c=1;c<rows[r].cells.length && c<cols;c++){
+              var cell = rows[r].cells[c];
+              if (!cell.hasAttribute('data-label')) cell.setAttribute('data-label', head.cells[c].textContent.trim());
+            }
+          }
+        }
+        continue;
+      }
+
+      if (t.dataset.iwWide) continue;
+      t.dataset.iwWide = '1';
+      t.style.setProperty('--iw-minw', (80 + cols * 108) + 'px');
+      var wrap = scroller(t);
+      wrap.classList.add('iw-xwrap');
+      if (ro) { ro.observe(wrap); ro.observe(t); } else measure(wrap);
+    }
+  }
+  // the table itself resizing (rows filtered, tab revealed) should re-check its wrapper
+  if (ro) {
+    var _measure = measure;
+    measure = function(el){ _measure(el.tagName === 'TABLE' ? el.parentElement : el); };
+  }
+  window.iwEnhanceTables = enhance;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhance); else enhance();
+  window.addEventListener('load', function(){ setTimeout(enhance, 600); });
+
+  /* Shareable tabs: indiawatch.net/#money opens Money Watch, and the Share button now sends that link */
+  function fromHash(){
+    var name = (location.hash || '').replace('#','');
+    if (!name || typeof IW_TABS === 'undefined' || IW_TABS.indexOf(name) === -1) return;
+    if (document.getElementById('pane-' + name) && !document.getElementById('pane-' + name).classList.contains('on')) {
+      window.sw(name, null, {fromHash:true, keepScroll:true});
+    }
+  }
+  fromHash();
+  window.addEventListener('hashchange', fromHash);
+
+  /* Arrow keys move between tabs when the tab strip has focus */
+  var strip = document.getElementById('main-nav');
+  if (strip) strip.addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var btns = Array.prototype.slice.call(strip.querySelectorAll('.tbtn'));
+    var i = btns.indexOf(document.activeElement);
+    if (i === -1) return;
+    e.preventDefault();
+    var next = btns[(i + (e.key === 'ArrowRight' ? 1 : btns.length - 1)) % btns.length];
+    next.focus(); next.click();
+  });
+})();
 </script>
 <script type="application/ld+json">
 {
@@ -6664,7 +6888,7 @@ window.addEventListener('load', attachXShareButtons);
       "name": "What is the current petrol price in Delhi today?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "As of May 31, 2026, petrol in Delhi is priced at ₹102.12/litre and diesel at ₹95.20/litre, following the 4th price hike in two weeks driven by the US-Iran conflict and crude oil spike above $100/barrel."
+        "text": "As of 3 October 2026, petrol in Delhi is priced at ₹102.12/litre and diesel at ₹95.20/litre. Pump prices have held steady in recent months even with Brent crude above $100 a barrel."
       }
     },
     {
@@ -6672,7 +6896,7 @@ window.addEventListener('load', attachXShareButtons);
       "name": "What is the current USD to INR exchange rate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "As of May 31, 2026, 1 US Dollar equals approximately ₹95.00 Indian Rupees. The rupee hit a record low of ₹96.97 per dollar on May 19–20, 2026, driven by US-Iran conflict crude oil surge and heavy FII outflows."
+        "text": "As of 1 October 2026, 1 US Dollar equals approximately ₹96.2 Indian Rupees. The rupee hit a record low of ₹96.97 per dollar on May 19–20, 2026, driven by US-Iran conflict crude oil surge and heavy FII outflows."
       }
     },
     {
